@@ -76,7 +76,11 @@ public class DBAccess {
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
       while (rs.next()) {
-         Ownership owner = new Ownership();
+         int id = rs.getInt("customerID");
+         String card = rs.getString("cardNum");
+         boolean current = (rs.getInt("current") == 1);
+         Ownership owner = new Ownership(id, card);
+         owner.setCurrent(current);
          //use row to fill in ownership
          owners.add(owner);
       } 
@@ -88,7 +92,12 @@ public class DBAccess {
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
       while (rs.next()) {
-         Payment payment = new Payment();
+         int id = rs.getInt("paymentID");
+         String card = rs.getString("cardNum");
+         java.util.Date date = convertToUtilDate(rs.getDate("paymentDate"));
+         double amount = Double.parseDouble(Float.toString(rs.getFloat("amount")));
+         
+         Payment payment = new Payment(id, card, date, amount);
          //use row to fill in payment
          payments.add(payment);
       } 
@@ -100,7 +109,14 @@ public class DBAccess {
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
       while (rs.next()) {
-         Transaction transaction = new Transaction();
+         int id = rs.getInt("transactionID");
+         int customerID = rs.getInt("customerID");
+         String card = rs.getString("cardNum");
+         int venderID = rs.getInt("venderID");
+         java.util.Date date = convertToUtilDate(rs.getDate("transactionDate"));
+         double amount = Double.parseDouble(Float.toString(rs.getFloat("amount")));
+         
+         Transaction transaction = new Transaction(id, customerID, card, venderID, date, amount);
          //use row to fill in transaction
          transactions.add(transaction);
       } 
@@ -112,7 +128,10 @@ public class DBAccess {
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
       while (rs.next()) {
-         Session session = new Session();
+         int id = rs.getInt("sessionID");
+         int customerID = rs.getInt("customerID");
+         java.util.Date date = convertToUtilDate(rs.getDate("loginDate"));
+         Session session = new Session(id, customer, date);
          //use row to fill in transaction
          sessions.add(session);
       } 
@@ -137,7 +156,29 @@ public class DBAccess {
    }
    
    
-   //helper functions
+   //generation helper functions
+   public int createNewSession() {
+      int sessionID = -1;
+      int exists = 0;
+      Random rand = new Random();
+      ArrayList<Session> sessions = runSessionSelect("select * from Sessions;");
+      while (sessionID == -1 || exists == 0) {
+         exists = 0;
+         sessionID = rand.nextInt(1001);
+         for (int i=0; i<sessions.size(); i++) {
+            if (sessions.get(i).getID() == sessionID) {
+               exists = 1;
+               break;
+            }
+         }
+      }
+      runUpdate("Insert into Sessions(sessionID, customerID, loginDate) values ("+sessionID+",0,NULL);");
+      
+      return sessionID;
+   
+   }
+   
+   //conversion helper functions
    public CreditCard.CardType convertTypeToModel(String text) {
       CreditCard.CardType type;
       if (typeText.equals("Visa")) {
@@ -176,5 +217,14 @@ public class DBAccess {
          text = "Visa";
       }
       return text;
+   }
+   
+   public java.util.Date convertToUtilDate(java.sql.Date date) {
+      return (java.util.Date)date;
+   }
+   
+   public java.sql.Date convertToSQLDate(java.util.Date date) {
+      DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+      return java.sql.Date.valueOf(df.format(date));
    }
 }

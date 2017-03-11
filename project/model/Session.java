@@ -6,13 +6,13 @@ public class Session {
    private int customerID;
    private Date loginDate; // for canceling credit card. single bit? 
 
-   public Ownership(int id) {
+   public Session(int id) {
       sessionID = id;
       customerID = -1;
       loginDate = null;
    }
    
-   public Ownership(int id, int customer, Date date) {
+   public Session(int id, int customer, Date date) {
       sessionID = id;
       customerID = customer;
       loginDate = date;
