@@ -3,8 +3,18 @@ package project.view;
 import javax.swing.*;
 import java.awt.*;
 
+import project.model.DBAccess;
+import project.model.Customer;
+
 public class CreatePaymentView extends JPanel {
-   public CreatePaymentView() {
-   
+   private int sessionID;
+   private Customer customer;
+
+
+   public CreatePaymentView(int id, Customer cust) {
+      sessionID = id;
+      customer = cust;
+      setLayout(null);
+	  setSize(450, 300);
    }
 }
