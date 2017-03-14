@@ -8,24 +8,27 @@ public class Transaction {
    private Date transactionDate;
    private int customerID;
    private String cardNumber;
-   private int venderID;
+   private int recieverID;
+   private int recieverType; //0 = vender, 1= customer
    private double amount; //needed?
 
-   public Transaction(int id, int customer, String card, int vender, Date date) {
+   public Transaction(int id, int customer, String card, int reciever, int type, Date date) {
       transactionID = id;
       customerID = customer;
       cardNumber = card;
-      venderID = vender;
+      recieverID = reciever;
+      recieverType = type;
       transactionDate = date;
       amount = 0;
    }
    
-   public Transaction(int id, int customer, String card, int vender, Date date, double amount) {
+   public Transaction(int id, int customer, String card, int reciever, Date date, int type, double amount) {
       transactionID = id;
       customerID = customer;
       cardNumber = card;
-      venderID = vender;
+      recieverID = vender;
       transactionDate = date;
+      recieverType = type;
       this.amount = amount;
    }
    
@@ -53,12 +56,20 @@ public class Transaction {
       cardNumber = num;
    }
    
-   public int getVenderID() {
-      return venderID;
+   public int getRecieverID() {
+      return recieverID;
    }
    
-   public void setVenderID(int id) {
-      venderID = id;
+   public void setRecieverID(int id) {
+      recieverID = id;
+   }
+   
+   public int getRecieverType() {
+      return recieverType;
+   }
+   
+   public void setRecieverType(int type) {
+      recieverType = type;
    }
    
    public Date getTransactionDate() {

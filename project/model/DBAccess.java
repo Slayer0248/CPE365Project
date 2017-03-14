@@ -112,11 +112,12 @@ public class DBAccess {
          int id = rs.getInt("transactionID");
          int customerID = rs.getInt("customerID");
          String card = rs.getString("cardNum");
-         int venderID = rs.getInt("venderID");
+         int recieverID = rs.getInt("recieverID");
+         int type = rs.getInt("recieverType");
          java.util.Date date = convertToUtilDate(rs.getDate("transactionDate"));
          double amount = Double.parseDouble(Float.toString(rs.getFloat("amount")));
          
-         Transaction transaction = new Transaction(id, customerID, card, venderID, date, amount);
+         Transaction transaction = new Transaction(id, customerID, card, recieverID, type, date, amount);
          //use row to fill in transaction
          transactions.add(transaction);
       } 
@@ -136,6 +137,21 @@ public class DBAccess {
          sessions.add(session);
       } 
       return sessions;
+   }
+   
+   public ArrayList<Membership> runSessionSelect(String query) {
+      ArrayList<Membership> members = new ArrayList<Membership>();
+      Statement stmt = conn.createStatement();
+      ResultSet rs = stmt.executeQuery(query);
+      while (rs.next()) {
+         int venderID = rs.getInt("venderID");
+         int customerID = rs.getInt("customerID");
+         boolean reciever = rs.getInt("mainReciever")==1;
+         Membership member = new Membership(venderID, customerID, reciever);
+         //use row to fill in transaction
+         members.add(member);
+      } 
+      return members;
    }
    
    
