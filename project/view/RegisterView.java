@@ -12,6 +12,6 @@ public class RegisterView extends JPanel {
    public RegisterView(int id) {
       sessionID = id;
       setLayout(null);
-	  setSize(450, 300);
+	  setBounds(0, 0, 450, 300);
    }
 }

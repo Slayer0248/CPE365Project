@@ -15,8 +15,12 @@ public class DBAccess {
 
    public void open() throws Exception {
       Class.forName("com.mysql.jdbc.Driver");
-      conn = DriverManager.getConnection("jdbc:mysql://cslvm74.csc.calpoly.edu/cjacob07", "cjacob07", "Ma94ne07k");
-      
+      //conn = DriverManager.getConnection("jdbc:mysql://cslvm74.csc.calpoly.edu/cjacob07", "cjacob07", "Ma94ne07k");
+      //conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cjacob07", "root", "root");
+      conn = DriverManager.getConnection("jdbc:mysql://ec2-52-9-55-58.us-west-1.compute.amazonaws.com:3306/365ProjectDB", "cjacob07", "365ProjectPass");
+      //365ProjectDB, cjacob07, 365ProjectPass
+
+      //System.out.println("connected");
    }
    
    public ArrayList<Customer> runCustomerSelect(String query) throws Exception {

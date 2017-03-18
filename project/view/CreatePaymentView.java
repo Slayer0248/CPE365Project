@@ -15,6 +15,6 @@ public class CreatePaymentView extends JPanel {
       sessionID = id;
       customer = cust;
       setLayout(null);
-	  setSize(450, 300);
+	  setSize(0, 0, 450, 300);
    }
 }

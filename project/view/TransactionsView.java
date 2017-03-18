@@ -14,6 +14,6 @@ public class TransactionsView extends JPanel {
       sessionID = id;
       customer = cust;
       setLayout(null);
-	  setSize(450, 300);   
+	  setBounds(0, 0, 450, 300);   
    }
 }
