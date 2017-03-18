@@ -27,7 +27,7 @@ public class LoginView extends JPanel {
    public LoginView(int id) {
         sessionID = id;
       	setLayout(null);
-		setSize(450, 300);
+		setBounds(0, 0, 450, 300);
 		
 		JLabel usernameLabel = new JLabel("Username:");
 		usernameLabel.setBounds(111, 106, 66, 16);
@@ -58,6 +58,7 @@ public class LoginView extends JPanel {
 		errorMsgLabel.setBorder(null);
 		errorMsgLabel.setVisible(false);
 		errorMsgLabel.setForeground(Color.RED);
+		errorMsgLabel.setLineWrap(true);
 		errorMsgLabel.setBounds(48, 170, 354, 60);
 		add(errorMsgLabel);
 		

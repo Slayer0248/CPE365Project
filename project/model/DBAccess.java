@@ -178,7 +178,7 @@ public class DBAccess {
       int exists = 0;
       Random rand = new Random();
       ArrayList<Session> sessions = runSessionSelect("select * from Sessions;");
-      while (sessionID == -1 || exists == 0) {
+      while (sessionID == -1 || exists == 1) {
          exists = 0;
          sessionID = rand.nextInt(1001);
          for (int i=0; i<sessions.size(); i++) {
@@ -188,7 +188,7 @@ public class DBAccess {
             }
          }
       }
-      runUpdate("Insert into Sessions(sessionID, customerID, loginDate) values ("+sessionID+",0,NULL);");
+      runUpdate("Insert into Sessions(sessionID, customerID, loginDate) values ("+sessionID+",NULL,NULL);");
       
       return sessionID;
    
