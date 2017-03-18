@@ -23,7 +23,7 @@ public class BankingSystem {
       
          loginView = new LoginView(sessionID);
       }
-      catch (Exception ex){
+      catch (Exception e){
          e.printStackTrace(System.out);
       }
       
@@ -36,7 +36,7 @@ public class BankingSystem {
                dbaccess.runUpdate("delete from Sessions where sessionID="+sessionID+";");
                dbaccess.close();
             }
-            catch (Exception ex) {
+            catch (Exception e) {
                e.printStackTrace(System.out);
             }
             System.exit(0);
