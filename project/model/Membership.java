@@ -1,12 +1,12 @@
 package project.model;
 
-public class Ownership {
+public class Membership {
 
    private int customerID;
    private int venderID;
    private boolean reciever; // for receiving vender transactions 
 
-   public Ownership(int customer, int vender, boolean reciever) {
+   public Membership(int customer, int vender, boolean reciever) {
       customerID = customer;
       venderID = vender;
       this.reciever = reciever;
