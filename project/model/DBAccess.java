@@ -13,13 +13,13 @@ public class DBAccess {
    }
 
 
-   public void open() {
+   public void open() throws Exception {
       Class.forName("com.mysql.jdbc.Driver");
       conn = DriverManager.getConnection("jdbc:mysql://cslvm74.csc.calpoly.edu/cjacob07", "cjacob07", "Ma94ne07k");
       
    }
    
-   public ArrayList<Customer> runCustomerSelect(String query) {
+   public ArrayList<Customer> runCustomerSelect(String query) throws Exception {
    	  ArrayList<Customer> customers = new ArrayList<Customer>();
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
@@ -37,7 +37,7 @@ public class DBAccess {
       return customers;
    }
    
-   public ArrayList<CreditCard> runCreditCardSelect(String query) {
+   public ArrayList<CreditCard> runCreditCardSelect(String query) throws Exception {
       ArrayList<CreditCard> cards = new ArrayList<CreditCard>();
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
@@ -57,7 +57,7 @@ public class DBAccess {
       return cards;
    }
    
-   public ArrayList<Vender> runVenderSelect(String query) {
+   public ArrayList<Vender> runVenderSelect(String query) throws Exception {
       ArrayList<Vender> venders = new ArrayList<Vender>();
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
@@ -72,7 +72,7 @@ public class DBAccess {
       return venders;
    }
    
-   public ArrayList<Ownership> runOwnershipSelect(String query) {
+   public ArrayList<Ownership> runOwnershipSelect(String query) throws Exception {
       ArrayList<Ownership> owners = new ArrayList<Ownership>();
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
@@ -88,7 +88,7 @@ public class DBAccess {
       return owners;
    }
    
-   public ArrayList<Payment> runPaymentSelect(String query) {
+   public ArrayList<Payment> runPaymentSelect(String query) throws Exception {
       ArrayList<Payment> payments = new ArrayList<Payment>();
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
@@ -105,7 +105,7 @@ public class DBAccess {
       return payments;
    }
    
-   public ArrayList<Transaction> runTransactionSelect(String query) {
+   public ArrayList<Transaction> runTransactionSelect(String query) throws Exception {
       ArrayList<Transaction> transactions = new ArrayList<Transaction>();
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
@@ -125,7 +125,7 @@ public class DBAccess {
       return transactions;
    }
    
-   public ArrayList<Session> runSessionSelect(String query) {
+   public ArrayList<Session> runSessionSelect(String query) throws Exception {
       ArrayList<Session> sessions = new ArrayList<Session>();
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
@@ -140,7 +140,7 @@ public class DBAccess {
       return sessions;
    }
    
-   public ArrayList<Membership> runMembershipSelect(String query) {
+   public ArrayList<Membership> runMembershipSelect(String query) throws Exception {
       ArrayList<Membership> members = new ArrayList<Membership>();
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
@@ -156,25 +156,25 @@ public class DBAccess {
    }
    
    
-   public ResultSet runSelect(String query) {
+   public ResultSet runSelect(String query) throws Exception {
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);
       return rs;
    }
    
    //insert, update, & delete query
-   public void runUpdate(String query) {
+   public void runUpdate(String query) throws Exception {
       Statement stmt = conn.createStatement();
       stmt.executeUpdate(query);
    }
 
-   public void close() {
+   public void close() throws Exception {
       conn.close();
    }
    
    
    //generation helper functions
-   public int createNewSession() {
+   public int createNewSession() throws Exception {
       int sessionID = -1;
       int exists = 0;
       Random rand = new Random();
