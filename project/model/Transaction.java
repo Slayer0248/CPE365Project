@@ -26,7 +26,7 @@ public class Transaction {
       transactionID = id;
       customerID = customer;
       cardNumber = card;
-      recieverID = vender;
+      recieverID =  reciever;
       transactionDate = date;
       recieverType = type;
       this.amount = amount;
@@ -89,7 +89,7 @@ public class Transaction {
    }
    
    public String toString() {
-      String result = "" + transactionDate + "  $" + amount + " to vender " + venderID + " from customer " + customerID;
+      String result = "" + transactionDate + "  $" + amount + " to vender " + recieverID + " from customer " + customerID;
       return result;
    }
 
