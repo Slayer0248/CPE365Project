@@ -22,6 +22,10 @@ public class BankingSystem {
          dbaccess.close();
       
          loginView = new LoginView(sessionID);
+         frame.setSize(450, 300);
+         frame.getContentPane().setLayout(null);
+         frame.getContentPane().add(loginView);
+         frame.setVisible(true);
       }
       catch (Exception e){
          e.printStackTrace(System.out);
@@ -43,9 +47,6 @@ public class BankingSystem {
          }
       });
       
-      frame.setSize(450, 300);
-      frame.getContentPane().setLayout(null);
-      frame.getContentPane().add(loginView);
-      frame.setVisible(true);
+      
    }
 }
