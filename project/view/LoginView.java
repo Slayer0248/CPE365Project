@@ -94,7 +94,10 @@ public class LoginView extends JPanel {
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// replace view for login with Register view
-				
+				JFrame frame = (JFrame) SwingUtilities.windowForComponent(this);
+				RegisterView registerView = new RegisterView(sessionID);
+				frame.getContentPane().remove(this);
+				frame.getContentPane().add(registerView);
 			}
 		});
 		registerButton.setBounds(251, 247, 117, 29);
