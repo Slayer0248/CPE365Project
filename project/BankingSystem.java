@@ -15,6 +15,7 @@ public class BankingSystem {
    public static void main(String args[]) {
       dbaccess = new DBAccess();
       LoginView loginView;
+      JFrame frame = new JFrame("BankingSystem");
       
       try {
          dbaccess.open();
@@ -26,13 +27,7 @@ public class BankingSystem {
          frame.getContentPane().setLayout(null);
          frame.getContentPane().add(loginView);
          frame.setVisible(true);
-      }
-      catch (Exception e){
-         e.printStackTrace(System.out);
-      }
-      
-      JFrame frame = new JFrame("BankingSystem");
-      frame.addWindowListener(new WindowAdapter() {
+         frame.addWindowListener(new WindowAdapter() {
          @Override
          public void windowClosing(WindowEvent windowEvent) {
             try {
@@ -45,7 +40,14 @@ public class BankingSystem {
             }
             System.exit(0);
          }
-      });
+         });
+      }
+      catch (Exception e){
+         e.printStackTrace(System.out);
+      }
+      
+      
+      
       
       
    }
