@@ -7,7 +7,7 @@ import project.view.LoginView;
 import project.model.DBAccess;
 
 public class BankingSystem {
-   private int sessionID;
+   private static int sessionID;
    private static DBAccess dbaccess;
    
  

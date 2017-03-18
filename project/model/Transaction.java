@@ -22,7 +22,7 @@ public class Transaction {
       amount = 0;
    }
    
-   public Transaction(int id, int customer, String card, int reciever, Date date, int type, double amount) {
+   public Transaction(int id, int customer, String card, int reciever, int type, Date date, double amount) {
       transactionID = id;
       customerID = customer;
       cardNumber = card;

@@ -132,7 +132,7 @@ public class DBAccess {
          int id = rs.getInt("sessionID");
          int customerID = rs.getInt("customerID");
          java.util.Date date = convertToUtilDate(rs.getDate("loginDate"));
-         Session session = new Session(id, customer, date);
+         Session session = new Session(id, customerID, date);
          //use row to fill in transaction
          sessions.add(session);
       } 
