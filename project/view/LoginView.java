@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -94,10 +95,16 @@ public class LoginView extends JPanel {
 		registerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// replace view for login with Register view
-				JFrame frame = (JFrame) SwingUtilities.windowForComponent(this);
+				JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
 				RegisterView registerView = new RegisterView(sessionID);
-				frame.getContentPane().remove(this);
-				frame.getContentPane().add(registerView);
+				//frame.setSize(450, 320);
+				frame.remove(current);
+				frame.invalidate();
+				frame.add(registerView);
+				//frame.pack();
+				frame.revalidate();
+				frame.repaint();
 			}
 		});
 		registerButton.setBounds(251, 247, 117, 29);

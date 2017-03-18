@@ -23,9 +23,11 @@ public class BankingSystem {
          dbaccess.close();
       
          loginView = new LoginView(sessionID);
-         frame.setSize(450, 300);
-         frame.getContentPane().setLayout(null);
-         frame.getContentPane().add(loginView);
+         frame.setMinimumSize(new Dimension(488, 338));
+         frame.setSize(488, 338);
+         frame.setLayout(null);
+         frame.add(loginView);
+         //frame.pack();
          frame.setVisible(true);
          frame.addWindowListener(new WindowAdapter() {
          @Override
