@@ -197,16 +197,16 @@ public class DBAccess {
    //conversion helper functions
    public CreditCard.CardType convertTypeToModel(String text) {
       CreditCard.CardType type;
-      if (typeText.equals("Visa")) {
+      if (text.equals("Visa")) {
          type = CreditCard.CardType.VISA;
       } 
-      else if (typeText.equals("MC")) {
+      else if (text.equals("MC")) {
          type = CreditCard.CardType.MC;
       } 
-      else if (typeText.equals("American Express")) {
+      else if (text.equals("American Express")) {
          type = CreditCard.CardType.AMERICAN_EXPRESS;
       }
-      else if (typeText.equals("Discover")) {
+      else if (text.equals("Discover")) {
          type = CreditCard.CardType.DISCOVER;
       }
       else {
