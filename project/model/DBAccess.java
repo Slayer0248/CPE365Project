@@ -139,7 +139,7 @@ public class DBAccess {
       return sessions;
    }
    
-   public ArrayList<Membership> runSessionSelect(String query) {
+   public ArrayList<Membership> runMembershipSelect(String query) {
       ArrayList<Membership> members = new ArrayList<Membership>();
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(query);

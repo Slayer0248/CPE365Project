@@ -8,7 +8,7 @@ import project.model.DBAccess;
 
 public class BankingSystem {
    private int sessionID;
-   private DBAccess dbaccess;
+   private static DBAccess dbaccess;
    
  
    public static void main(String args[]) {
