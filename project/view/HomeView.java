@@ -10,10 +10,12 @@ import project.model.Customer;
 public class HomeView extends JPanel {
    private int sessionID;
    private Customer customer;
+   private DBAccess dbaccess;
    
    public HomeView(int id, Customer cust) {
       sessionID = id;
       customer = cust;
+      dbaccess = new DBAccess();
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
 	  
@@ -24,6 +26,25 @@ public class HomeView extends JPanel {
 	   JButton btnLogOut = new JButton("Log out");
 	   btnLogOut.addActionListener(new ActionListener() {
 	   	public void actionPerformed(ActionEvent e) {
+	   	   try {
+	   	      dbaccess.open();
+		      dbaccess.runUpdate("Update Sessions set customerID = NULL, loginDate = NULL where sessionID = "+sessionID+";");
+		      dbaccess.close();
+		  
+		      // replace view for login with Home
+		      LoginView loginView = new LoginView(sessionID);
+		      JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+		      JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+		      frame.remove(current);
+			  frame.invalidate();
+			  frame.add(loginView);
+			  //frame.pack();
+			  frame.revalidate();
+			  frame.repaint();
+		   }
+           catch (Exception ex) {
+              ex.printStackTrace(System.out);
+           }
 	   	}
 	   });
 	   btnLogOut.setBounds(333, 6, 117, 29);

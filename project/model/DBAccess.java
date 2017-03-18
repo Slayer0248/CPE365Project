@@ -159,6 +159,15 @@ public class DBAccess {
       return members;
    }
    
+   public int getCount(String query) throws Exception {
+      int count = -1;
+      Statement stmt = conn.createStatement();
+      ResultSet rs = stmt.executeQuery(query);
+      while (rs.next()) {
+         count = rs.getInt("count");
+      } 
+      return count;
+   }
    
    public ResultSet runSelect(String query) throws Exception {
       Statement stmt = conn.createStatement();

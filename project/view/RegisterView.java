@@ -9,6 +9,8 @@ import project.model.Customer;
 
 public class RegisterView extends JPanel {
    private int sessionID;
+   private DBAccess dbaccess;
+   
    private JTextField nameField;
    private JTextField ssnField;
    private JTextField addressField;
@@ -18,6 +20,7 @@ public class RegisterView extends JPanel {
 
    public RegisterView(int id) {
       sessionID = id;
+      dbaccess = new DBAccess();
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
 	  
@@ -103,10 +106,95 @@ public class RegisterView extends JPanel {
 		  JButton registerButton = new JButton("Register");
 		  registerButton.addActionListener(new ActionListener() {
 		  	public void actionPerformed(ActionEvent e) {
+		  	    try {
+		  	    String password = new String(passwordField.getPassword());
+				String username = nameField.getText();
+				String ssn = ssnField.getText();
+				String address = addressField.getText();
+				String phone = phoneField.getText();
+				
+				dbaccess.open();
+				int loginCount = dbaccess.getCount("select count(*) as count from Customers where name =\"" + username + "\" and password = \"" + password+"\";");
+				int ssnCount = dbaccess.getCount("select count(*) as count from Customers where SSN =" + ssn + ";");
+				dbaccess.close();
+				
+				if (username.length() > 100) {
+					errorMsgLabel.setText("Error: username length is longer than 100 characters.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+					
+				}
+				else if (!isInt(ssn)) {
+					errorMsgLabel.setText("Error: SSN must be an Integer.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				}
+				else if (ssn.length() > 9) {
+					errorMsgLabel.setText("Error: SSN length is longer than 9 digits.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				}
+				else if (address.length() > 100) {
+					errorMsgLabel.setText("Error: address length is longer than 100 characters.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				}
+				else if (!isInt(phone)) {
+					errorMsgLabel.setText("Error: Phone number must be an Integer.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				}
+				else if (phone.length() > 10) {
+					errorMsgLabel.setText("Error: Phone number length is longer than 10 digits.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				}
+				else if (password.length() > 100) {
+					errorMsgLabel.setText("Error: password length is longer than 100 characters.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				}
+				else if (loginCount > 0) {
+					errorMsgLabel.setText("Error: This username & password combination already exists.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				}
+				else if (ssnCount > 0) {
+					errorMsgLabel.setText("Error: This SSN already exists.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				}
+				else {
+				    //insert customer into database
+				    String query = "Insert into Customers(SSN, name, password, address, phone) values("+ssn+", \""+ username+"\", \"" +password+"\", \""+address+"\", \"" +phone+"\");";
+				    dbaccess.open();
+				    dbaccess.runUpdate(query);
+				    dbaccess.close();
+				    
+				
+				    errorMsgLabel.setText("Customer was added successfully!");
+					errorMsgLabel.setForeground(Color.GREEN);
+					errorMsgLabel.setVisible(true);
+				}
+				
+				errorMsgLabel.repaint();
+				}
+                catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+                }
 		  	}
 		  });
 		  registerButton.setBounds(259, 265, 117, 29);
 		  add(registerButton);
 		  
+   }
+   
+   private boolean isInt(String s) {
+        for(int i = 0; i < s.length(); i++){
+            if(!Character.isDigit(s.charAt(i))){
+                 return false;
+            }
+        }
+        return true;
    }
 }

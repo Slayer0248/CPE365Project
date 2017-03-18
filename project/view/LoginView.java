@@ -6,6 +6,8 @@ import javax.swing.JTextArea;
 import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
 import javax.swing.*;
+import java.util.*;
+import java.text.*;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -24,10 +26,12 @@ public class LoginView extends JPanel {
    private JPasswordField passwordField;
    private JTextArea errorMsgLabel;
    private int sessionID;
+   private DBAccess dbaccess;
 
    public LoginView(int id) {
         sessionID = id;
       	setLayout(null);
+      	dbaccess = new DBAccess();
 		setBounds(0, 0, 450, 300);
 		
 		JLabel usernameLabel = new JLabel("Username:");
@@ -66,6 +70,7 @@ public class LoginView extends JPanel {
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			    try {
 				String password = new String(passwordField.getPassword());
 				String username = usernameField.getText();
 				if (username.length() > 100) {
@@ -78,13 +83,46 @@ public class LoginView extends JPanel {
 				}
 				
 				//Run select query to get the customers
+				dbaccess.open();
+				ArrayList<Customer> logins = dbaccess.runCustomerSelect("select * from Customers where name =\"" + username + "\" and password = \"" + password+"\";");
+				dbaccess.close();
 				
 				//error check select results 
-				
-				// update sessions table given current session id
-				
-				// replace view for login with Home
-				
+				if (logins.size() > 1) {
+				   
+				   errorMsgLabel.setText("Error: shouldn't be more than 2 of the same logins!");
+				   errorMsgLabel.setVisible(true);
+				}
+				else if (logins.size() ==0) {
+				   
+				   errorMsgLabel.setText("Error: username & password combination not found!");
+				   errorMsgLabel.setVisible(true);
+				}
+				else if (logins.size() ==1) {
+				   // update sessions table given current session id
+				   Customer cust = logins.get(0);
+				   Date now = new Date();
+				   DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+				   dbaccess.open();
+				   dbaccess.runUpdate("Update Sessions set customerID = " + cust.getID() +", loginDate = STR_TO_DATE('" + df.format(now) + "', '%m/%d/%Y') where sessionID = "+sessionID+";");
+				   dbaccess.close();
+				   
+				   // replace view for login with Home
+				   HomeView homeView = new HomeView(sessionID, cust);
+				   JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				   JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				   frame.remove(current);
+				   frame.invalidate();
+				   frame.add(homeView);
+				   //frame.pack();
+				   frame.revalidate();
+				   frame.repaint();
+				   
+				}
+				}
+                catch (Exception ex) {
+                   ex.printStackTrace(System.out);
+                }
 				
 			}
 		});
