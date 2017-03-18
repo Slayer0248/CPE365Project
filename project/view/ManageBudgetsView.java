@@ -2,6 +2,7 @@ package project.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 import project.model.DBAccess;
 import project.model.Customer;
@@ -15,6 +16,6 @@ public class ManageBudgetsView extends JPanel {
       sessionID = id;
       customer = cust;
       setLayout(null);
-	  setSize(0, 0, 450, 300);
+	  setBounds(0, 0, 450, 300);
    }
 }
