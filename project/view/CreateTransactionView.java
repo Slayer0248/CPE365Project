@@ -3,9 +3,12 @@ package project.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
+import java.io.*;
 
 import project.model.DBAccess;
 import project.model.Customer;
+import project.model.Ownership;
 
 public class CreateTransactionView extends JPanel {
    private final JLabel cardNumLabel = new JLabel("Card Number:");
@@ -21,11 +24,15 @@ public class CreateTransactionView extends JPanel {
    private int sessionID;
    private Customer customer;
 
+   private DBAccess dbaccess;
+
    public CreateTransactionView(int id, Customer cust) {
       sessionID = id;
       customer = cust;
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
+
+	  dbaccess = new DBAccess();
 	  
 	  cardNumLabel.setBounds(60, 115, 87, 16);
        add(cardNumLabel);
@@ -90,10 +97,22 @@ public class CreateTransactionView extends JPanel {
 	   recieverComboBox.setBounds(155, 79, 175, 27);
 	   add(recieverComboBox);
 	   
-	   cardComboBox = new JComboBox();
-	   cardComboBox.setBounds(155, 111, 175, 27);
-	   add(cardComboBox);
-	   
+	   try {
+		   dbaccess.open();
+		   ArrayList<Ownership> owns = dbaccess.runOwnershipSelect("select * from Ownership where customerID=2;");
+		   dbaccess.close();
+		   String[] temp = new String[owns.size()];
+	   	   for (int i=0; i < owns.size(); i++) {
+	   	   		temp[i]=owns.get(i).getCardNumber();
+	   	   }
+
+	   	   cardComboBox = new JComboBox(temp);
+	       cardComboBox.setBounds(155, 111, 175, 27);
+	       add(cardComboBox);
+	   }
+	   catch (Exception ex) {
+           ex.printStackTrace(System.out);
+       }
 	   
 	   
 	   amountField = new JTextField();
