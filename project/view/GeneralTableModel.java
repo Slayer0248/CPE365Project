@@ -3,7 +3,7 @@ package project.view;
 import java.util.*;
 import javax.swing.table.*;
 
-public GeneralTableModel extends AbstractTableModel {
+public class GeneralTableModel extends AbstractTableModel {
    private Object[][] data;
    private String[] columns;
    
