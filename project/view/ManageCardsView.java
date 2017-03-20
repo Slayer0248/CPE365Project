@@ -68,7 +68,7 @@ public class ManageCardsView extends JPanel {
 		errorMsgLabel.setVisible(false);
 		errorMsgLabel.setForeground(Color.RED);
 		errorMsgLabel.setLineWrap(true);
-		errorMsgLabel.setBounds(48, 45, 354, 35);
+		errorMsgLabel.setBounds(48, 45, 354, 20);
 		add(errorMsgLabel);
 		
 		JButton btnHome = new JButton("Home");

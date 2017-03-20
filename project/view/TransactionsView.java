@@ -11,6 +11,7 @@ public class TransactionsView extends JPanel {
    private int sessionID;
    private Customer customer;
    private JTable transactionsTable;
+   private JTextArea errorMsgLabel;
    private JPanel transactionsPanel;
    private JScrollPane transactionsScrollPane;
    private String[] columnNames = {"ID", "CustomerID", "Card #", "Reciever Type", "Reciever ID", "Date", "Amount"};
@@ -31,7 +32,7 @@ public class TransactionsView extends JPanel {
 		//Possible addition: filter by card and date range
 		
 		transactionsPanel = new JPanel();
-		transactionsPanel.setBounds(48, 90, 354, 200);
+		transactionsPanel.setBounds(48, 90, 354, 160);
 		add(transactionsPanel);
 		transactionsPanel.setLayout(new BorderLayout(0, 0));
 		
@@ -40,8 +41,19 @@ public class TransactionsView extends JPanel {
 		transactionsTable.setFillsViewportHeight(true);
 		
 		transactionsScrollPane = new JScrollPane(transactionsTable);
-		transactionsScrollPane.setPreferredSize(new Dimension(354, 200));
+		transactionsScrollPane.setPreferredSize(new Dimension(354, 160));
 		transactionsPanel.add(transactionsScrollPane, BorderLayout.CENTER);
+		
+		errorMsgLabel = new JTextArea("");
+		errorMsgLabel.setOpaque(false);
+		errorMsgLabel.setFocusable(false);
+		errorMsgLabel.setEditable(false);
+		errorMsgLabel.setBorder(null);
+		errorMsgLabel.setVisible(false);
+		errorMsgLabel.setForeground(Color.RED);
+		errorMsgLabel.setLineWrap(true);
+		errorMsgLabel.setBounds(48, 45, 354, 20);
+		add(errorMsgLabel);
 
 		JButton btnHome = new JButton("Home");
 		btnHome.setBounds(363, 6, 81, 29);
