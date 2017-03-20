@@ -16,8 +16,11 @@ public class ManageVendersView extends JPanel {
    private JTextArea errorMsgLabel;
    private JPanel vendersPanel;
    private JScrollPane vendersScrollPane;
-   private String[] columnNames = {"", " ", "name", "offices", "member", "discount"};
+   private String[] columnNames = {"Vender ID", "name", "offices", "member", "discount"};
    private ArrayList<Integer> editStates = new ArrayList<Integer>();
+   private JButton btnAdd;
+   private JButton btnDelete;
+   private JButton btnUpdate;
 
 
    public ManageVendersView(int id, Customer cust) {
@@ -31,7 +34,7 @@ public class ManageVendersView extends JPanel {
 		add(nameLabel);
 		
 		vendersPanel = new JPanel();
-		vendersPanel.setBounds(48, 90, 354, 200);
+		vendersPanel.setBounds(48, 90, 354, 160);
 		add(vendersPanel);
 		vendersPanel.setLayout(new BorderLayout(0, 0));
 		
@@ -40,7 +43,7 @@ public class ManageVendersView extends JPanel {
 		vendersTable.setFillsViewportHeight(true);
 		
 		vendersScrollPane = new JScrollPane(vendersTable);
-		vendersScrollPane.setPreferredSize(new Dimension(354, 200));
+		vendersScrollPane.setPreferredSize(new Dimension(354, 160));
 		vendersPanel.add(vendersScrollPane, BorderLayout.CENTER);
 		
 		
@@ -79,6 +82,30 @@ public class ManageVendersView extends JPanel {
 		   	}
 		   });
 		add(btnHome);
+		
+		btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAdd.setBounds(48, 265, 94, 29);
+		add(btnAdd);
+		
+		btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDelete.setBounds(178, 265, 94, 29);
+		add(btnDelete);
+		
+		btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnUpdate.setBounds(306, 265, 94, 29);
+		add(btnUpdate);
    }
 
 	private Object[][] getTableContent() {

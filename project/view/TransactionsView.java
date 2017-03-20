@@ -14,6 +14,9 @@ public class TransactionsView extends JPanel {
    private JPanel transactionsPanel;
    private JScrollPane transactionsScrollPane;
    private String[] columnNames = {"ID", "CustomerID", "Card #", "Reciever Type", "Reciever ID", "Date", "Amount"};
+   private JButton btnAdd;
+   private JButton btnDelete;
+   private JButton btnUpdate;
 
    public TransactionsView(int id, Customer cust) {
       sessionID = id;
@@ -61,6 +64,30 @@ public class TransactionsView extends JPanel {
 		   	}
 		   });
 		add(btnHome);
+		
+		btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAdd.setBounds(48, 265, 94, 29);
+		add(btnAdd);
+		
+		btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDelete.setBounds(178, 265, 94, 29);
+		add(btnDelete);
+		
+		btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnUpdate.setBounds(306, 265, 94, 29);
+		add(btnUpdate);s
    }
    
    private Object[][] getTableContent() {

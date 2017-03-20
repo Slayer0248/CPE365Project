@@ -1,10 +1,12 @@
 package project.view;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+import javax.swing.table.*;
 import project.model.DBAccess;
 import project.model.Customer;
 
@@ -16,9 +18,12 @@ public class ManageCardsView extends JPanel {
    private JTextArea errorMsgLabel;
    private JPanel cardsPanel;
    private JScrollPane cardsScrollPane;
-   private String[] columnNames = {"", "", "Card #", "Type", "Credit limit", "Balance", "Active"};
+   private String[] columnNames = {"Card #", "Type", "Credit limit", "Balance", "Active", "Current"};
    private ArrayList<Integer> editStates = new ArrayList<Integer>();
    private GeneralTableModel tModel;
+   private JButton btnAdd;
+   private JButton btnDelete;
+   private JButton btnUpdate;
 
    public ManageCardsView(int id, Customer cust) {
       sessionID = id;
@@ -31,17 +36,27 @@ public class ManageCardsView extends JPanel {
 		add(nameLabel);
 		
 		cardsPanel = new JPanel();
-		cardsPanel.setBounds(48, 90, 354, 200);
+		cardsPanel.setBounds(48, 90, 354, 160);
 		add(cardsPanel);
 		cardsPanel.setLayout(new BorderLayout(0, 0));
 		
 		tModel = new GeneralTableModel(getTableContent(), columnNames);
 		cardsTable = new JTable(tModel);
+		//TableColumn addColumn = cardsTable.getColumnModel().getColumn(0);
+		//DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		/*cardsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+           public void valueChanged(ListSelectionEvent event) {
+            // do some actions here, for example
+            // print first column value from selected row
+              System.out.println(cardsTable.getValueAt(cardsTable.getSelectedRow(), 0).toString());
+           }
+        });*/
+		
 		//cardsTable = new JTable();
 		cardsTable.setFillsViewportHeight(true);
 		
 		cardsScrollPane = new JScrollPane(cardsTable);
-		cardsScrollPane.setPreferredSize(new Dimension(354, 200));
+		cardsScrollPane.setPreferredSize(new Dimension(354, 160));
 		cardsPanel.add(cardsScrollPane, BorderLayout.CENTER);
 		
 		
@@ -77,6 +92,30 @@ public class ManageCardsView extends JPanel {
 		   	}
 		   });
 		add(btnHome);
+		
+		btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAdd.setBounds(48, 265, 94, 29);
+		add(btnAdd);
+		
+		btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDelete.setBounds(178, 265, 94, 29);
+		add(btnDelete);
+		
+		btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnUpdate.setBounds(306, 265, 94, 29);
+		add(btnUpdate);
    }
    
 	private Object[][] getTableContent() {
