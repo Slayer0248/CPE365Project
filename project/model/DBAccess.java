@@ -254,7 +254,7 @@ public class DBAccess {
    }
    
    public java.sql.Date convertToSQLDate(java.util.Date date) {
-      DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+      DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
       return java.sql.Date.valueOf(df.format(date));
    }
 }

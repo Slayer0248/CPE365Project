@@ -102,7 +102,7 @@ public class LoginView extends JPanel {
 				   // update sessions table given current session id
 				   Customer cust = logins.get(0);
 				   Date now = new Date();
-				   DateFormat df = new SimpleDateFormat("mm/dd/yyyy");
+				   DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 				   dbaccess.open();
 				   dbaccess.runUpdate("Update Sessions set customerID = " + cust.getID() +", loginDate = STR_TO_DATE('" + df.format(now) + "', '%m/%d/%Y') where sessionID = "+sessionID+";");
 				   dbaccess.close();
