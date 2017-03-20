@@ -19,7 +19,7 @@ public class HomeView extends JPanel {
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
 	  
-	   JLabel nameLabel = new JLabel("");
+	   JLabel nameLabel = new JLabel(cust.getName());
 	   nameLabel.setBounds(6, 6, 61, 16);
 	   add(nameLabel);
 	   
@@ -57,6 +57,20 @@ public class HomeView extends JPanel {
 	   JButton viewTransactionsButton = new JButton("View Transactions");
 	   viewTransactionsButton.addActionListener(new ActionListener() {
 	   	public void actionPerformed(ActionEvent e) {
+	   	   try {
+	   	      TransactionsView transView = new TransactionsView(sessionID, customer);
+	   	      JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+		      JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+		      frame.remove(current);
+			  frame.invalidate();
+			  frame.add(transView);
+			  //frame.pack();
+			  frame.revalidate();
+			  frame.repaint();
+	   	   }
+	   	   catch (Exception ex) {
+              ex.printStackTrace(System.out);
+           }
 	   	}
 	   });
 	   viewTransactionsButton.setBounds(146, 72, 158, 29);
@@ -65,6 +79,21 @@ public class HomeView extends JPanel {
 	   JButton createTransactionButton = new JButton("Create Transaction");
 	   createTransactionButton.addActionListener(new ActionListener() {
 	   	public void actionPerformed(ActionEvent e) {
+	   	   try {
+	   	      CreateTransactionView createTransView = new CreateTransactionView(sessionID, customer);
+	   	      JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+		      JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+		      frame.remove(current);
+			  frame.invalidate();
+			  frame.add(createTransView);
+			  //frame.pack();
+			  frame.revalidate();
+			  frame.repaint();
+	   	   
+	   	   }
+	   	   catch (Exception ex) {
+              ex.printStackTrace(System.out);
+           }
 	   	}
 	   });
 	   createTransactionButton.setBounds(146, 104, 158, 29);
@@ -73,6 +102,20 @@ public class HomeView extends JPanel {
 	   JButton makePaymentButton = new JButton("Make Payment");
 	   makePaymentButton.addActionListener(new ActionListener() {
 	   	public void actionPerformed(ActionEvent e) {
+	   	   try {
+	   	      CreatePaymentView createPaymentView = new CreatePaymentView(sessionID, customer);
+	   	      JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+		      JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+		      frame.remove(current);
+			  frame.invalidate();
+			  frame.add(createPaymentView);
+			  //frame.pack();
+			  frame.revalidate();
+			  frame.repaint();
+	   	   }
+	   	   catch (Exception ex) {
+              ex.printStackTrace(System.out);
+           }
 	   	}
 	   });
 	   makePaymentButton.setBounds(146, 136, 158, 29);
@@ -81,6 +124,20 @@ public class HomeView extends JPanel {
 	   JButton manageCardsButton = new JButton("Manage Cards");
 	   manageCardsButton.addActionListener(new ActionListener() {
 	   	public void actionPerformed(ActionEvent e) {
+	   	   try {
+	   	      ManageCardsView manageCards = new ManageCardsView(sessionID, customer);
+	   	      JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+		      JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+		      frame.remove(current);
+			  frame.invalidate();
+			  frame.add(manageCards);
+			  //frame.pack();
+			  frame.revalidate();
+			  frame.repaint();
+	   	   }
+	   	   catch (Exception ex) {
+              ex.printStackTrace(System.out);
+           }
 	   	}
 	   });
 	   manageCardsButton.setBounds(146, 168, 158, 29);
@@ -89,6 +146,20 @@ public class HomeView extends JPanel {
 	   JButton manageVendersButton = new JButton("Manage Venders");
 	   manageVendersButton.addActionListener(new ActionListener() {
 	   	public void actionPerformed(ActionEvent e) {
+	   	   try {
+	   	      ManageVendersView manageVenders = new ManageVendersView(sessionID, customer);
+	   	      JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+		      JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+		      frame.remove(current);
+			  frame.invalidate();
+			  frame.add(manageVenders);
+			  //frame.pack();
+			  frame.revalidate();
+			  frame.repaint();
+	   	   }
+	   	   catch (Exception ex) {
+              ex.printStackTrace(System.out);
+           }
 	   	}
 	   });
 	   manageVendersButton.setBounds(146, 200, 158, 29);

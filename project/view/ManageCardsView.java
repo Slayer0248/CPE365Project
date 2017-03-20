@@ -25,7 +25,7 @@ public class ManageCardsView extends JPanel {
       setLayout(null);
 	  setBounds(0, 0, 450, 300); 
 	  
-	  JLabel nameLabel = new JLabel("");
+	  JLabel nameLabel = new JLabel(customer.getName());
 		nameLabel.setBounds(6, 6, 94, 16);
 		add(nameLabel);
 		
@@ -58,6 +58,20 @@ public class ManageCardsView extends JPanel {
 		btnHome.setBounds(363, 6, 81, 29);
 		btnHome.addActionListener(new ActionListener() {
 		   	public void actionPerformed(ActionEvent e) {
+		   	   try {
+		   	      HomeView homeView = new HomeView(sessionID, customer);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(homeView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();
+		   	   }
+		   	   catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+               }
 		   	}
 		   });
 		add(btnHome);
