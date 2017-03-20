@@ -18,6 +18,7 @@ public class ManageCardsView extends JPanel {
    private JScrollPane cardsScrollPane;
    private String[] columnNames = {"", "", "Card #", "Type", "Credit limit", "Balance", "Active"};
    private ArrayList<Integer> editStates = new ArrayList<Integer>();
+   private GeneralTableModel tModel;
 
    public ManageCardsView(int id, Customer cust) {
       sessionID = id;
@@ -34,7 +35,8 @@ public class ManageCardsView extends JPanel {
 		add(cardsPanel);
 		cardsPanel.setLayout(new BorderLayout(0, 0));
 		
-		cardsTable = new JTable(getTableContent(), columnNames);
+		tModel = new GeneralTableModel(getTableContent(), columnNames);
+		cardsTable = new JTable(tModel);
 		//cardsTable = new JTable();
 		cardsTable.setFillsViewportHeight(true);
 		

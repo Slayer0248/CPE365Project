@@ -32,7 +32,7 @@ public class TransactionsView extends JPanel {
 		add(transactionsPanel);
 		transactionsPanel.setLayout(new BorderLayout(0, 0));
 		
-		transactionsTable = new JTable(null, columnNames);
+		transactionsTable = new JTable(getTableContent(), columnNames);
 		//transactionsTable = new JTable();
 		transactionsTable.setFillsViewportHeight(true);
 		
