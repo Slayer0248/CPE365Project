@@ -99,7 +99,7 @@ public class CreateTransactionView extends JPanel {
 	   
 	   try {
 		   dbaccess.open();
-		   ArrayList<Ownership> owns = dbaccess.runOwnershipSelect("select * from Ownership where customerID=2;");
+		   ArrayList<Ownership> owns = dbaccess.runOwnershipSelect("select * from Ownership where customerID=" + cust.getID() + ";");
 		   dbaccess.close();
 		   String[] temp = new String[owns.size()];
 	   	   for (int i=0; i < owns.size(); i++) {

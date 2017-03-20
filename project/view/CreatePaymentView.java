@@ -3,9 +3,11 @@ package project.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 import project.model.DBAccess;
 import project.model.Customer;
+import project.model.CreditCard;
 
 public class CreatePaymentView extends JPanel {
    private final JLabel cardNumLabel = new JLabel("Card Number:");
@@ -15,13 +17,14 @@ public class CreatePaymentView extends JPanel {
 
    private int sessionID;
    private Customer customer;
-
+   private DBAccess dbaccess;
 
    public CreatePaymentView(int id, Customer cust) {
       sessionID = id;
       customer = cust;
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
+	  dbaccess = new DBAccess();
 	  
 	  cardNumLabel.setBounds(60, 115, 87, 16);
 	    add(cardNumLabel);
@@ -60,9 +63,25 @@ public class CreatePaymentView extends JPanel {
 		lblDate.setBounds(113, 179, 38, 16);
 		add(lblDate);
 		
-		JComboBox cardComboBox = new JComboBox();
-		cardComboBox.setBounds(155, 111, 175, 27);
-		add(cardComboBox);
+		try {
+			dbaccess.open();
+			String query = "select * from CreditCards c, Ownership o where o.customerID=" + cust.getID() + " and c.cardNum=o.cardNum;";
+			ArrayList<CreditCard> cards = dbaccess.runCreditCardSelect(query);
+			dbaccess.close();
+
+			String[] nums = new String[cards.size()];
+			for (int i=0; i < cards.size(); i++) {
+				nums[i] = cards.get(i).getCardNumber();
+			}
+
+			JComboBox cardComboBox = new JComboBox(nums);
+			cardComboBox.setBounds(155, 111, 175, 27);
+			add(cardComboBox);
+		}
+		catch(Exception e) {
+			e.printStackTrace(System.out);
+		}
+		
 		   
 		   
 		   
