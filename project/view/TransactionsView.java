@@ -99,7 +99,7 @@ public class TransactionsView extends JPanel {
 			}
 		});
 		btnUpdate.setBounds(306, 265, 94, 29);
-		add(btnUpdate);s
+		add(btnUpdate);
    }
    
    private Object[][] getTableContent() {
