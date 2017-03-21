@@ -3,6 +3,7 @@ package project.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.*;
 
 import project.model.DBAccess;
 import project.model.Transaction;
@@ -11,11 +12,14 @@ import project.model.Customer;
 public class TransactionsView extends JPanel {
    private int sessionID;
    private Customer customer;
+   private DBAccess dbaccess;
+   
    private JTable transactionsTable;
    private JTextArea errorMsgLabel;
    private JPanel transactionsPanel;
    private JScrollPane transactionsScrollPane;
-   private String[] columnNames = {"ID", "CustomerID", "Card #", "Reciever Type", "Reciever ID", "Date", "Amount"};
+   private String[] columnNames = {"ID", "Card #", "Reciever Type", "Reciever ID", "Date", "Amount"};
+   private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
    private JButton btnAdd;
    private JButton btnDelete;
    private JButton btnUpdate;
@@ -23,9 +27,11 @@ public class TransactionsView extends JPanel {
    public TransactionsView(int id, Customer cust) {
       sessionID = id;
       customer = cust;
+      dbaccess = new DBAccess();
       setLayout(null);
 	  setBounds(0, 0, 450, 300); 
 	  
+	  try {
 	  JLabel nameLabel = new JLabel(customer.getName());
 		nameLabel.setBounds(6, 6, 94, 16);
 		add(nameLabel);
@@ -116,26 +122,29 @@ public class TransactionsView extends JPanel {
 		});
 		btnUpdate.setBounds(306, 265, 94, 29);
 		add(btnUpdate);
+		
+		}
+		catch (Exception ex) {
+           ex.printStackTrace(System.out);
+        }
    }
    
-   private Object[][] getTableContent() {
-		int rowCount = 1;
+   private Object[][] getTableContent() throws Exception {
+        dbaccess.open();
+        transactions = dbaccess.runTransactionSelect("select * from Transactions where customerID="+customer.getID()+";");
+        dbaccess.close();
+		
 		Object[][] result = new Object[rowCount][columnNames.length];
-		for (int i=0; i<rowCount; i++) {
-			if (i<rowCount-1) {
-				
-				
-			}
-			else {
-				JButton btnAdd = new JButton("+");
-				btnAdd.setBounds(0, 0, 20, 29);
-				result[i][0] = btnAdd;
-				
-				for (int j=1; j<columnNames.length; j++) {
-					result[i][j] = "";
-				}
-				
-			}
+		{"ID", "CustomerID", "Card #", "Reciever Type", "Reciever ID", "Date", "Amount"};
+		for (int i=0; i<transactions.size(); i++) {
+		    Transaction trans = transactions.get(i);
+		    DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+			result[i][0] = "" +trans.getID();
+			result[i][1] = trans.getCardNumber();
+			result[i][2] = (trans.getRecieverType() == 0?"Customer":"Vender");
+			result[i][3] = "" +trans.getRecieverID();
+			result[i][4] = df.format(trans.getTransactionDate());
+			result[i][5] = "" + trans.getAmount();
 		}
 		return result;
 	}
