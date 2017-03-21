@@ -110,6 +110,12 @@ public class TransactionsView extends JPanel {
 		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			   if (transactionsTable.getSelectedRow() == -1) {
+			      //error case
+			   }
+			   else {
+			      //delete and refresh
+			   }
 			}
 		});
 		btnDelete.setBounds(178, 265, 94, 29);
@@ -118,7 +124,12 @@ public class TransactionsView extends JPanel {
 		btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			  
+			  if (transactionsTable.getSelectedRow() == -1) {
+			      //error case
+			   }
+			   else {
+			      //delete and refresh
+			   }
 			}
 		});
 		btnUpdate.setBounds(306, 265, 94, 29);

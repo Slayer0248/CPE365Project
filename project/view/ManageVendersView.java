@@ -113,6 +113,12 @@ public class ManageVendersView extends JPanel {
 		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			   if (vendersTable.getSelectedRow() == -1) {
+			      //error case
+			   }
+			   else {
+			      //delete and refresh
+			   }
 			}
 		});
 		btnDelete.setBounds(178, 265, 94, 29);
@@ -121,6 +127,27 @@ public class ManageVendersView extends JPanel {
 		btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			   if (vendersTable.getSelectedRow() == -1) {
+			      //error case
+			      
+			   }
+			   else {
+			      //update and refresh
+			      try {
+		   	      CreateVendersView createVendersView = new CreateVendersView(sessionID, customer, null);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(createVendersView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();
+		   	   }
+		   	   catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+               }
+			   }
 			}
 		});
 		btnUpdate.setBounds(306, 265, 94, 29);

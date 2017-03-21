@@ -125,6 +125,12 @@ public class ManageCardsView extends JPanel {
 		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			   if (cardsTable.getSelectedRow() == -1) {
+			   
+			   }
+			   else {
+			   
+			   }
 			}
 		});
 		btnDelete.setBounds(178, 265, 94, 29);
@@ -133,6 +139,12 @@ public class ManageCardsView extends JPanel {
 		btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			   if (cardsTable.getSelectedRow() == -1) {
+			   
+			   }
+			   else {
+			   
+			   }
 			}
 		});
 		btnUpdate.setBounds(306, 265, 94, 29);
