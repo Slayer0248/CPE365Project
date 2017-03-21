@@ -131,8 +131,8 @@ public class ManageVendersView extends JPanel {
 			        dbaccess.runUpdate("delete from Venders where venderID = \"" +vender.getID()+"\";");
 			        dbaccess.close();
 			        
-			        cardsTable = new JTable(getTableContent(), columnNames);
-			        cardsTable.repaint();
+			        vendersTable = new JTable(getTableContent(), columnNames);
+			        vendersTable.repaint();
 			     }
 		   	     catch (Exception ex) {
                     ex.printStackTrace(System.out);

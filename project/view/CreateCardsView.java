@@ -135,11 +135,11 @@ public class CreateCardsView extends JPanel {
 		     balanceField.setText(""+curCard.getBalance());
 		   }*/
 		   
-		   JButton submitButton = new JButton(curCard != null? "Update":"Create");
+		   JButton submitButton = new JButton("Create");
 			  submitButton.addActionListener(new ActionListener() {
 			  	public void actionPerformed(ActionEvent e) {
 			  	 int active = (activeCheckBox.isSelected() ? 1:0);
-			  	 int current = (currentCheckBox.isSelected() ? 1:0);
+			  	 int currentVal = (currentCheckBox.isSelected() ? 1:0);
 			  	 String cardNum = cardField.getText();
 			  	 String cardType = (String)cardTypeComboBox.getSelectedItem();
 			  	 String creditLimitStr = creditLimitField.getText();
@@ -157,6 +157,12 @@ public class CreateCardsView extends JPanel {
 			  	 }
 			  	 else if (cardNum.length() > 16) {
 			  	    errorMsgLabel.setText("Error: Card number length is longer than 16 characters.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+					errorMsgLabel.repaint();
+			  	 }
+			  	 else if (cardType ==null) {
+			  	    errorMsgLabel.setText("Error: A card type must be selected.");
 					errorMsgLabel.setForeground(Color.RED);
 					errorMsgLabel.setVisible(true);
 					errorMsgLabel.repaint();
@@ -204,7 +210,7 @@ public class CreateCardsView extends JPanel {
 			  	 
 			  	  dbaccess.open();
 			  	  dbaccess.runUpdate("Insert into CreditCards(cardNum, type, creditLimit, balance, active) Values (\""+cardNum+"\", \""+cardType+"\", " + creditLimitStr+", "+ balanceStr+", "+active+");");
-			  	  dbaccess.runUpdate("Insert into Ownership(customerID, cardNum, current) Values ("+customer.getID()+", \""+cardNum+"\", " + current+");");
+			  	  dbaccess.runUpdate("Insert into Ownership(customerID, cardNum, current) Values ("+customer.getID()+", \""+cardNum+"\", " + currentVal+");");
 			  	  dbaccess.close();
 			  	  
 			  	 
