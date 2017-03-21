@@ -153,6 +153,7 @@ public class CreateCardsView extends JPanel {
 				  //frame.pack();
 				  frame.revalidate();
 				  frame.repaint();
+				  }
 		          catch (Exception ex) {
                   ex.printStackTrace(System.out);
                  }
