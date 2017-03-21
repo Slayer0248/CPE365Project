@@ -25,16 +25,16 @@ public class CreateCardsView extends JPanel {
 	
    private int sessionID;
    private Customer customer;
-   private CreditCard curCard;
-   private Ownership curOwnership;
+   //private CreditCard curCard;
+   //private Ownership curOwnership;
 
    private DBAccess dbaccess;
    
-   public CreateCardsView(int id, Customer cust, CreditCard card, Ownership ownership) {
+   public CreateCardsView(int id, Customer cust) {
       sessionID = id;
       customer = cust;
-      curCard = card; //if null, the we're creating a new card
-      curOwnership = ownership;
+      //curCard = card; //if null, the we're creating a new card
+      //curOwnership = ownership;
       dbaccess = new DBAccess();
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
@@ -127,13 +127,13 @@ public class CreateCardsView extends JPanel {
 		   errorMsgLabel.setBounds(48, 207, 354, 55);
 		   add(errorMsgLabel);
 		   
-		   if (curCard != null && curOwnership != null) {
+		   /*if (curCard != null && curOwnership != null) {
 		     //set with current values
 		     cardNum.setEditable(false);
 		     cardNum.setText(""+curCard.getCardNumber());
 		     balanceField.setEditable(false);
 		     balanceField.setText(""+curCard.getBalance());
-		   }
+		   }*/
 		   
 		   JButton submitButton = new JButton(curCard != null? "Update":"Create");
 			  submitButton.addActionListener(new ActionListener() {
@@ -154,16 +154,17 @@ public class CreateCardsView extends JPanel {
 			  	 try {
 			  	 
 			  	  dbaccess.open();
+			  	  dbaccess.close();
 			  	 
-			  	  int success = 0;
-			  	  if (curCard != null && curOwnership != null) {
+			  	  //int success = 0;
+			  	  /*if (curCard != null && curOwnership != null) {
 		             //update
 		             
 		          }
 		          else  {
 		             //create
 		             
-		          }
+		          }*/
 		          
 		          dbaccess.close();
 		          ManageCardsView manageCardsView = new ManageCardsView(sessionID, customer);

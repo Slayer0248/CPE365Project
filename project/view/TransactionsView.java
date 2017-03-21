@@ -89,7 +89,7 @@ public class TransactionsView extends JPanel {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			   try {
-		   	      CreateTransactionView createTransView = new CreateTransactionView(sessionID, customer, null);
+		   	      CreateTransactionView createTransView = new CreateTransactionView(sessionID, customer);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
 				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
 				  frame.remove(current);
@@ -126,7 +126,7 @@ public class TransactionsView extends JPanel {
 		btnDelete.setBounds(178, 265, 94, 29);
 		add(btnDelete);
 		
-		btnUpdate = new JButton("Update");
+		/*btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			  if (transactionsTable.getSelectedRow() == -1) {
@@ -143,7 +143,7 @@ public class TransactionsView extends JPanel {
 			}
 		});
 		btnUpdate.setBounds(306, 265, 94, 29);
-		add(btnUpdate);
+		add(btnUpdate);*/
 		
 		}
 		catch (Exception ex) {

@@ -104,7 +104,7 @@ public class ManageCardsView extends JPanel {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			    try {
-		   	      CreateCardsView createCardsView = new CreateCardsView(sessionID, customer, null, null);
+		   	      CreateCardsView createCardsView = new CreateCardsView(sessionID, customer);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
 				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
 				  frame.remove(current);
@@ -139,7 +139,7 @@ public class ManageCardsView extends JPanel {
 			     
 			     try {
 			        dbaccess.open();
-			        dbaccess.runUpdate("delete from Ownership where customerID = " +customer.getID()+ "and cardNum = \"" +card.getCardNumber()+"\";");
+			        //dbaccess.runUpdate("delete from Ownership where customerID = " +customer.getID()+ "and cardNum = \"" +card.getCardNumber()+"\";");
 			        dbaccess.runUpdate("delete from CreditCards where cardNum = \"" +card.getCardNumber()+"\";");
 			        dbaccess.close();
 			        
@@ -157,7 +157,7 @@ public class ManageCardsView extends JPanel {
 		btnDelete.setBounds(178, 265, 94, 29);
 		add(btnDelete);
 		
-		btnUpdate = new JButton("Update");
+		/*btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			   if (cardsTable.getSelectedRow() == -1) {
@@ -173,7 +173,7 @@ public class ManageCardsView extends JPanel {
 			      Ownership owner = ownerships.get(cardsTable.getSelectedRow());
 			      
 			      try {
-		   	      CreateCardsView createCardsView = new CreateCardsView(sessionID, customer, card, owner);
+		   	      CreateCardsView createCardsView = new CreateCardsView(sessionID, customer);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
 				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
 				  frame.remove(current);
@@ -191,7 +191,7 @@ public class ManageCardsView extends JPanel {
 			}
 		});
 		btnUpdate.setBounds(306, 265, 94, 29);
-		add(btnUpdate);
+		add(btnUpdate);*/
 		
 	    }
 		catch (Exception ex) {

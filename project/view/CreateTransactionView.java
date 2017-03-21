@@ -28,10 +28,10 @@ public class CreateTransactionView extends JPanel {
 
    private DBAccess dbaccess;
 
-   public CreateTransactionView(int id, Customer cust, Transaction trans) {
+   public CreateTransactionView(int id, Customer cust) {
       sessionID = id;
       customer = cust;
-      curTrans = trans; //if null, then we're creating a new transaction
+      //curTrans = trans; //if null, then we're creating a new transaction
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
 
