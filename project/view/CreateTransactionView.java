@@ -142,6 +142,21 @@ public class CreateTransactionView extends JPanel {
 	   JButton submitButton = new JButton("Create");
 			  submitButton.addActionListener(new ActionListener() {
 			  	public void actionPerformed(ActionEvent e) {
+			  	
+			  	try {
+		   	      /*TransactionsView transView = new TransactionsView(sessionID, customer);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(transView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();*/
+		   	   }
+		   	   catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+               }
 			  	}
 			  });
 			  submitButton.setBounds(81, 271, 117, 29);
@@ -150,9 +165,52 @@ public class CreateTransactionView extends JPanel {
 			  JButton cancelButton = new JButton("Cancel");
 			  cancelButton.addActionListener(new ActionListener() {
 			  	public void actionPerformed(ActionEvent e) {
+			  	try {
+		   	      TransactionsView transView = new TransactionsView(sessionID, customer);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(transView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();
+		   	   }
+		   	   catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+               }
 			  	}
 			  });
 			  cancelButton.setBounds(259, 271, 117, 29);
 			  add(cancelButton);
+   }
+   
+   
+   public boolean isValidDate(String input, String format) {
+    //boolean valid = false;
+
+    try {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        dateFormat.parse(input);
+    } catch (Exception ignore) {
+       return false;
+    }
+
+    return true;
+   }
+   
+    public boolean isDouble(String val) {
+      String decimalPattern = "([0-9]*)\\.([0-9]*)";  
+      boolean match = Pattern.matches(decimalPattern, val);
+      return match;
+   }
+   
+   private boolean isInt(String s) {
+        for(int i = 0; i < s.length(); i++){
+            if(!Character.isDigit(s.charAt(i))){
+                 return false;
+            }
+        }
+        return true;
    }
 }
