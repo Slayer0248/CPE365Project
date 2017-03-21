@@ -14,6 +14,7 @@ public class CreatePaymentView extends JPanel {
    private JTextField amountField;
    private JTextField dateField;
    private JTextArea errorMsgLabel;
+   private JComboBox cardComboBox;
 
    private int sessionID;
    private Customer customer;
@@ -74,7 +75,7 @@ public class CreatePaymentView extends JPanel {
 				nums[i] = cards.get(i).getCardNumber();
 			}
 
-			JComboBox cardComboBox = new JComboBox(nums);
+			cardComboBox = new JComboBox(nums);
 			cardComboBox.setBounds(155, 111, 175, 27);
 			add(cardComboBox);
 		}

@@ -10,6 +10,7 @@ import javax.swing.table.*;
 import project.model.DBAccess;
 import project.model.CreditCard;
 import project.model.Customer;
+import project.model.Ownership;
 
 public class ManageCardsView extends JPanel {
    private int sessionID;

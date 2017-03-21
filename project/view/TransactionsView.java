@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.*;
+import java.util.*;
 
 import project.model.DBAccess;
 import project.model.Transaction;
@@ -134,8 +135,7 @@ public class TransactionsView extends JPanel {
         transactions = dbaccess.runTransactionSelect("select * from Transactions where customerID="+customer.getID()+";");
         dbaccess.close();
 		
-		Object[][] result = new Object[rowCount][columnNames.length];
-		{"ID", "CustomerID", "Card #", "Reciever Type", "Reciever ID", "Date", "Amount"};
+		Object[][] result = new Object[transactions.size()][columnNames.length];
 		for (int i=0; i<transactions.size(); i++) {
 		    Transaction trans = transactions.get(i);
 		    DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
