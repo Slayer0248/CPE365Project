@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.regex.*;
+import java.text.*;
 
 import project.model.DBAccess;
 import project.model.Customer;
@@ -111,9 +113,102 @@ public class CreatePaymentView extends JPanel {
 		JButton createButton = new JButton("Create");
 		createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			   try {
+			     String cardNum = (String)cardComboBox.getSelectedItem();
+			  	 String amountStr = amountField.getText();
+			  	 String dateStr = dateField.getText();
+			  	 
+			  	 if (cardNum == null) {
+			  	    errorMsgLabel.setText("Error: Card number must be selected.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint(); 
+			  	 }
+			  	 else if (!isInt(cardNum)) {
+			  	    errorMsgLabel.setText("Error: Card number is not an integer.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint(); 
+			  	 }
+			  	 else if (cardNum.length() > 16) {
+			  	    errorMsgLabel.setText("Error: Card number can't be longer than 16 digits.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint(); 
+			  	 } 
+			  	 else if (!isDouble(amountStr)) {
+			  	    errorMsgLabel.setText("Error: Amount is not a double.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint(); 
+			  	 }
+			  	 else if (!isValidDate(dateStr, "MM/dd/yyyy")) {
+			  	    errorMsgLabel.setText("Error: Date is not in MM/dd/yyyy format.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint(); 
+			  	 }
+			     else {
+			        dbaccess.open();
+			  	    String query = "select * from CreditCards where cardNum =\"" + cardNum + "\";";
+			  	    CreditCard card = dbaccess.runCreditCardSelect(query).get(0);
+			  	    dbaccess.close();
+			  	    
+			  	    if (Double.parseDouble(amountStr) > card.getBalance()) {
+			  	       errorMsgLabel.setText("Error: Payment amount can't be more than card balance. Card balance is $" +card.getBalance()+".");
+					   errorMsgLabel.setForeground(Color.RED);
+					   errorMsgLabel.setVisible(true);  
+					   errorMsgLabel.repaint(); 
+			  	    }
+			  	    else {
+			  	       dbaccess.open();
+			  	       query = "Insert into Payments(cardNum, paymentDate, amount) Values (\""+cardNum+"\", STR_TO_DATE('"+dateStr+"', '%m/%d/%Y'), "+amountStr+");";
+			  	       dbaccess.runUpdate(query);
+			  	       dbaccess.close();
+			  	       
+			  	       errorMsgLabel.setText("Successfully made payment on credit card.");
+					   errorMsgLabel.setForeground(Color.GREEN);
+					   errorMsgLabel.setVisible(true);  
+					   errorMsgLabel.repaint(); 
+			  	    }
+			     
+			     }
+			   
+			   }
+		       catch(Exception ex) {
+			      ex.printStackTrace(System.out);
+		       }
 			}
 		});
 		createButton.setBounds(160, 271, 117, 29);
 		add(createButton);
+   }
+   
+   public boolean isValidDate(String input, String format) {
+    //boolean valid = false;
+
+    try {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+        dateFormat.parse(input);
+    } catch (Exception ignore) {
+       return false;
+    }
+
+    return true;
+   }
+   
+    public boolean isDouble(String val) {
+      String decimalPattern = "([0-9]*)\\.([0-9]*)";  
+      boolean match = Pattern.matches(decimalPattern, val);
+      return match;
+   }
+   
+   private boolean isInt(String s) {
+        for(int i = 0; i < s.length(); i++){
+            if(!Character.isDigit(s.charAt(i))){
+                 return false;
+            }
+        }
+        return true;
    }
 }
