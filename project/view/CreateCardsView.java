@@ -34,6 +34,7 @@ public class CreateCardsView extends JPanel {
       customer = cust;
       curCard = card; //if null, the we're creating a new card
       curOwnership = ownership;
+      dbaccess = new DBAccess();
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
 	  
@@ -125,9 +126,36 @@ public class CreateCardsView extends JPanel {
 		   errorMsgLabel.setBounds(48, 207, 354, 55);
 		   add(errorMsgLabel);
 		   
-		   JButton submitButton = new JButton("Create");
+		   if (curCard != null && curOwnership != null) {
+		     //set with current values
+		   }
+		   
+		   JButton submitButton = new JButton(curCard != null? "Update":"Create");
 			  submitButton.addActionListener(new ActionListener() {
 			  	public void actionPerformed(ActionEvent e) {
+			  	 try {
+			  	  dbaccess.open();
+			  	 
+			  	  if (curCard != null && curOwnership != null) {
+		             //update
+		          }
+		          else  {
+		             //create
+		             
+		          }
+		          
+		          ManageCardsView manageCardsView = new ManageCardsView(sessionID, customer);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(manageCardsView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();
+		          catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+                 }
 			  	}
 			  });
 			  submitButton.setBounds(81, 265, 117, 29);
@@ -136,6 +164,20 @@ public class CreateCardsView extends JPanel {
 			  JButton cancelButton = new JButton("Cancel");
 			  cancelButton.addActionListener(new ActionListener() {
 			  	public void actionPerformed(ActionEvent e) {
+			  	  try {
+		   	      ManageCardsView manageCardsView = new ManageCardsView(sessionID, customer);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(manageCardsView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();
+		   	   }
+		   	   catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+               }
 			  	}
 			  });
 			  cancelButton.setBounds(259, 265, 117, 29);

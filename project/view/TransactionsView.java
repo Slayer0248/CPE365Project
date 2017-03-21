@@ -112,6 +112,11 @@ public class TransactionsView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			   if (transactionsTable.getSelectedRow() == -1) {
 			      //error case
+			      errorMsgLabel.setText("Error: No row selected to delete");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				  
+				  errorMsgLabel.repaint();
 			   }
 			   else {
 			      //delete and refresh
@@ -126,6 +131,11 @@ public class TransactionsView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			  if (transactionsTable.getSelectedRow() == -1) {
 			      //error case
+			      errorMsgLabel.setText("Error: No row selected to update.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				  
+				  errorMsgLabel.repaint();
 			   }
 			   else {
 			      //delete and refresh

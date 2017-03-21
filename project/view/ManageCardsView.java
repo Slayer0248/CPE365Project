@@ -126,10 +126,31 @@ public class ManageCardsView extends JPanel {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			   if (cardsTable.getSelectedRow() == -1) {
-			   
+			     errorMsgLabel.setText("Error: No row selected to delete");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				  
+				  errorMsgLabel.repaint();
 			   }
 			   else {
-			   
+			     //String cardNum = cardsTable.getValueAt(cardsTable.getSelectedRow(), 0).toString();
+			     CreditCard card = cardsOwned.get(cardsTable.getSelectedRow());
+			     Ownership owner = ownerships.get(cardsTable.getSelectedRow());
+			     
+			     try {
+			        dbaccess.open();
+			        dbaccess.runUpdate("delete from Ownership where customerID = " +customer.getID()+ "and cardNum = \"" +card.getCardNumber()+"\";");
+			        dbaccess.runUpdate("delete from CreditCards where cardNum = \"" +card.getCardNumber()+"\";");
+			        dbaccess.close();
+			        
+			        cardsTable = new JTable(getTableContent(), columnNames);
+			        cardsTable.repaint();
+			     }
+		   	     catch (Exception ex) {
+                    ex.printStackTrace(System.out);
+                 }
+                 
+                 
 			   }
 			}
 		});
@@ -140,10 +161,32 @@ public class ManageCardsView extends JPanel {
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			   if (cardsTable.getSelectedRow() == -1) {
-			   
+			      errorMsgLabel.setText("Error: No row selected to delete");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				  
+				  errorMsgLabel.repaint();
 			   }
 			   else {
-			   
+			      //String cardNum = cardsTable.getValueAt(cardsTable.getSelectedRow(), 0).toString();
+			      CreditCard card = cardsOwned.get(cardsTable.getSelectedRow());
+			      Ownership owner = ownerships.get(cardsTable.getSelectedRow());
+			      
+			      try {
+		   	      CreateCardsView createCardsView = new CreateCardsView(sessionID, customer, card, owner);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(createCardsView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();
+		   	   }
+		   	   catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+               }
+			      
 			   }
 			}
 		});

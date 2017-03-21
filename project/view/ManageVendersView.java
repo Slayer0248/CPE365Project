@@ -115,6 +115,11 @@ public class ManageVendersView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			   if (vendersTable.getSelectedRow() == -1) {
 			      //error case
+			      errorMsgLabel.setText("Error: No row selected to delete");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				  
+				  errorMsgLabel.repaint();
 			   }
 			   else {
 			      //delete and refresh
@@ -129,10 +134,15 @@ public class ManageVendersView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			   if (vendersTable.getSelectedRow() == -1) {
 			      //error case
-			      
+			      errorMsgLabel.setText("Error: No row selected to update");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+				  
+				  errorMsgLabel.repaint();
 			   }
 			   else {
 			      //update and refresh
+			      
 			      try {
 		   	      CreateVendersView createVendersView = new CreateVendersView(sessionID, customer, null);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
