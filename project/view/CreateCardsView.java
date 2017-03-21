@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.regex.*;
 import java.io.*;
 
 import project.model.DBAccess;
@@ -93,8 +94,8 @@ public class CreateCardsView extends JPanel {
 		   /*recieverComboBox = new JComboBox();
 		   recieverComboBox.setBounds(155, 79, 175, 27);
 		   add(recieverComboBox);*/
-		   
-		   cardTypeComboBox = new JComboBox();
+		   String[] types = {"Visa", "MC", "American Express", "Discover"};
+		   cardTypeComboBox = new JComboBox(types);
 		   cardTypeComboBox.setBounds(155, 111, 175, 27);
 		   add(cardTypeComboBox);
 		   
@@ -128,22 +129,43 @@ public class CreateCardsView extends JPanel {
 		   
 		   if (curCard != null && curOwnership != null) {
 		     //set with current values
+		     cardNum.setEditable(false);
+		     cardNum.setText(""+curCard.getCardNumber());
+		     balanceField.setEditable(false);
+		     balanceField.setText(""+curCard.getBalance());
 		   }
 		   
 		   JButton submitButton = new JButton(curCard != null? "Update":"Create");
 			  submitButton.addActionListener(new ActionListener() {
 			  	public void actionPerformed(ActionEvent e) {
+			  	 int active = (activeCheckBox.isSelected() ? 1:0);
+			  	 int current = (currentCheckBox.isSelected() ? 1:0);
+			  	 String cardNum = cardField.getText();
+			  	 String cardType = (String)cardTypeComboBox.getSelectedItem();
+			  	 String creditLimit = creditLimitField.getText();
+			  	 String balance = balanceField.getText();
+			  	 
+			  	 if (cardNum.length() > 16) {
+			  	    
+			  	 }
+			  	 else if (!isInt(cardNum)){
+			  	 
+			  	 }
 			  	 try {
+			  	 
 			  	  dbaccess.open();
 			  	 
+			  	  int success = 0;
 			  	  if (curCard != null && curOwnership != null) {
 		             //update
+		             
 		          }
 		          else  {
 		             //create
 		             
 		          }
 		          
+		          dbaccess.close();
 		          ManageCardsView manageCardsView = new ManageCardsView(sessionID, customer);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
 				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
@@ -153,6 +175,7 @@ public class CreateCardsView extends JPanel {
 				  //frame.pack();
 				  frame.revalidate();
 				  frame.repaint();
+				  
 				  }
 		          catch (Exception ex) {
                   ex.printStackTrace(System.out);
@@ -183,5 +206,20 @@ public class CreateCardsView extends JPanel {
 			  });
 			  cancelButton.setBounds(259, 265, 117, 29);
 			  add(cancelButton);
+   }
+   
+   public boolean isDouble(String val) {
+      String decimalPattern = "([0-9]*)\\.([0-9]*)";  
+      boolean match = Pattern.matches(decimalPattern, val);
+      return match;
+   }
+   
+   private boolean isInt(String s) {
+        for(int i = 0; i < s.length(); i++){
+            if(!Character.isDigit(s.charAt(i))){
+                 return false;
+            }
+        }
+        return true;
    }
 }
