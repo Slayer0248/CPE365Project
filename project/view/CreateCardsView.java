@@ -142,31 +142,74 @@ public class CreateCardsView extends JPanel {
 			  	 int current = (currentCheckBox.isSelected() ? 1:0);
 			  	 String cardNum = cardField.getText();
 			  	 String cardType = (String)cardTypeComboBox.getSelectedItem();
-			  	 String creditLimit = creditLimitField.getText();
-			  	 String balance = balanceField.getText();
+			  	 String creditLimitStr = creditLimitField.getText();
+			  	 String balanceStr = balanceField.getText();
 			  	 
-			  	 if (cardNum.length() > 16) {
-			  	    
-			  	 }
-			  	 else if (!isInt(cardNum)){
-			  	 
-			  	 }
 			  	 try {
+			  	 dbaccess.open();
+			  	  int cardCount = dbaccess.getCount("select count(*) as count from CreditCards where cardNum =\"" + cardNum + "\";");
+			  	  dbaccess.close();
+			  	 if (!isInt(cardNum)){
+			  	    errorMsgLabel.setText("Error: Card number is not an integer.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+					errorMsgLabel.repaint();
+			  	 }
+			  	 else if (cardNum.length() > 16) {
+			  	    errorMsgLabel.setText("Error: Card number length is longer than 16 characters.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+					errorMsgLabel.repaint();
+			  	 }
+			  	 else if (!isDouble(creditLimitStr)){
+			  	    errorMsgLabel.setText("Error: Credit limit is not a double.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+					errorMsgLabel.repaint();
+			  	 }
+			  	 else if (0.0 > Double.parseDouble(creditLimitStr)) {
+			  	    errorMsgLabel.setText("Error: Credit Limit  can't less than 0.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);   
+					errorMsgLabel.repaint();
+			  	 
+			  	 }
+			  	 else if (!isDouble(balanceStr)) {
+			  	    errorMsgLabel.setText("Error: Balance is not a double.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);
+					errorMsgLabel.repaint();
+			  	 }
+			  	 else if (0.0 > Double.parseDouble(balanceStr)) {
+			  	    errorMsgLabel.setText("Error: Balance can't less than 0.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);   
+					errorMsgLabel.repaint();
+			  	 
+			  	 }
+			  	 else if (Double.parseDouble(creditLimitStr) < Double.parseDouble(balanceStr)) {
+			  	    errorMsgLabel.setText("Error: Balance can't be greater than Credit limit.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);   
+					errorMsgLabel.repaint();
+			  	 
+			  	 }
+			  	 else if (cardCount > 0){
+			  	   errorMsgLabel.setText("Error: Card already exists");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint(); 
+			  	 }
+			  	else {
 			  	 
 			  	  dbaccess.open();
+			  	  dbaccess.runUpdate("Insert into CreditCards(cardNum, type, creditLimit, balance, active) Values (\""+cardNum+"\", \""+cardType+"\", " + creditLimitStr+", "+ balanceStr+", "+active+");");
+			  	  dbaccess.runUpdate("Insert into Ownership(customerID, cardNum, current) Values ("+customer.getID()+", \""+cardNum+"\", " + current+");");
 			  	  dbaccess.close();
+			  	  
 			  	 
-			  	  //int success = 0;
-			  	  /*if (curCard != null && curOwnership != null) {
-		             //update
-		             
-		          }
-		          else  {
-		             //create
-		             
-		          }*/
+			  	  
 		          
-		          dbaccess.close();
 		          ManageCardsView manageCardsView = new ManageCardsView(sessionID, customer);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
 				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
@@ -176,11 +219,14 @@ public class CreateCardsView extends JPanel {
 				  //frame.pack();
 				  frame.revalidate();
 				  frame.repaint();
+				  }
 				  
 				  }
 		          catch (Exception ex) {
                   ex.printStackTrace(System.out);
                  }
+                 
+                 
 			  	}
 			  });
 			  submitButton.setBounds(81, 265, 117, 29);

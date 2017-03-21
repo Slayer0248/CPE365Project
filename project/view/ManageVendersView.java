@@ -123,6 +123,20 @@ public class ManageVendersView extends JPanel {
 			   }
 			   else {
 			      //delete and refresh
+			      Vender vender = venders.get(vendersTable.getSelectedRow());
+			      
+			       try {
+			        dbaccess.open();
+			        //dbaccess.runUpdate("delete from Ownership where customerID = " +customer.getID()+ "and cardNum = \"" +card.getCardNumber()+"\";");
+			        dbaccess.runUpdate("delete from Venders where venderID = \"" +vender.getID()+"\";");
+			        dbaccess.close();
+			        
+			        cardsTable = new JTable(getTableContent(), columnNames);
+			        cardsTable.repaint();
+			     }
+		   	     catch (Exception ex) {
+                    ex.printStackTrace(System.out);
+                 }
 			   }
 			}
 		});
@@ -144,7 +158,8 @@ public class ManageVendersView extends JPanel {
 			      //update and refresh
 			      
 			      try {
-		   	      CreateVendersView createVendersView = new CreateVendersView(sessionID, customer, null);
+			      Vender vender = venders.get(vendersTable.getSelectedRow());
+		   	      CreateVendersView createVendersView = new CreateVendersView(sessionID, customer, vender);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
 				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
 				  frame.remove(current);

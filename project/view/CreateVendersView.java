@@ -91,9 +91,57 @@ public class CreateVendersView extends JPanel {
 		errorMsgLabel.setBounds(48, 171, 354, 60);
 		add(errorMsgLabel);
 		   
+		if (curVender!= null) {
+		   //update
+		   nameField.setText(curVender.getName());
+		   officesField.setText(curVender.getOffices());
+		}
 		JButton submitButton = new JButton("Create");
 		  submitButton.addActionListener(new ActionListener() {
 		  	public void actionPerformed(ActionEvent e) {
+		  	   try {
+		  	      String name = nameField.getText();
+		  	      String offices = officesField.getText();
+		  	      if (name.length() > 100) {
+		  	         errorMsgLabel.setText("Error: Name can't be longer than 100 characters.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint(); 
+		  	      }
+		  	      else if (offices.length() > 100) {
+		  	         errorMsgLabel.setText("Error: Offices can't be longer than 100 characters.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint(); 
+					
+		  	      }
+		  	      else {
+		  	      
+		  	      dbaccess.open();
+		  	      if (curVender!= null) {
+		             //update
+		             dbaccess.runUpdate("Update Venders set name = \"" + name + "\", offices = \""+offices+"\" where venderID= "+curVender.getID()+";");
+		          }
+		          else {
+		             //create
+		             dbaccess.runUpdate("Insert into Venders(name, offices) Values (\"" + name + "\", \"" +offices+"\");");
+		          }
+		          dbaccess.close();
+		  	   
+		   	      ManageVendersView manageVendersView = new ManageVendersView(sessionID, customer);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(manageVendersView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();
+				  }
+		   	   }
+		   	   catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+               }
 		  	}
 		  });
 		  submitButton.setBounds(81, 265, 117, 29);
@@ -102,6 +150,21 @@ public class CreateVendersView extends JPanel {
 		  JButton cancelButton = new JButton("Cancel");
 		  cancelButton.addActionListener(new ActionListener() {
 		  	public void actionPerformed(ActionEvent e) {
+		  	
+		  	   try {
+		   	      ManageVendersView manageVendersView = new ManageVendersView(sessionID, customer);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(manageVendersView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();
+		   	   }
+		   	   catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+               }
 		  	}
 		  });
 		  cancelButton.setBounds(259, 265, 117, 29);

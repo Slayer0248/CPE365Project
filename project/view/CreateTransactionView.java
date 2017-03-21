@@ -24,7 +24,7 @@ public class CreateTransactionView extends JPanel {
 
    private int sessionID;
    private Customer customer;
-   private Transaction curTrans;
+   //private Transaction curTrans;
 
    private DBAccess dbaccess;
 
