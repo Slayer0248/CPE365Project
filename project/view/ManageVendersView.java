@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.util.*;
 
 import project.model.DBAccess;
+import project.model.Vender;
 import project.model.Customer;
 
 public class ManageVendersView extends JPanel {

@@ -8,6 +8,7 @@ import java.util.*;
 
 import javax.swing.table.*;
 import project.model.DBAccess;
+import project.model.CreditCard;
 import project.model.Customer;
 
 public class ManageCardsView extends JPanel {

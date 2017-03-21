@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import project.model.DBAccess;
+import project.model.Transaction;
 import project.model.Customer;
 
 public class TransactionsView extends JPanel {

@@ -8,6 +8,7 @@ import java.io.*;
 
 import project.model.DBAccess;
 import project.model.Customer;
+import project.model.Transaction;
 import project.model.Ownership;
 
 public class CreateTransactionView extends JPanel {
@@ -23,12 +24,14 @@ public class CreateTransactionView extends JPanel {
 
    private int sessionID;
    private Customer customer;
+   private Transaction curTrans;
 
    private DBAccess dbaccess;
 
-   public CreateTransactionView(int id, Customer cust) {
+   public CreateTransactionView(int id, Customer cust, Transaction trans) {
       sessionID = id;
       customer = cust;
+      curTrans = trans; //if null, then we're creating a new transaction
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
 
@@ -136,12 +139,20 @@ public class CreateTransactionView extends JPanel {
 	   errorMsgLabel.setBounds(48, 207, 354, 60);
 	   add(errorMsgLabel);
 	   
-	   JButton createButton = new JButton("Create");
-	   createButton.addActionListener(new ActionListener() {
-	   	public void actionPerformed(ActionEvent e) {
-	   	}
-	   });
-	   createButton.setBounds(160, 271, 117, 29);
-	   add(createButton);
+	   JButton submitButton = new JButton("Create");
+			  submitButton.addActionListener(new ActionListener() {
+			  	public void actionPerformed(ActionEvent e) {
+			  	}
+			  });
+			  submitButton.setBounds(81, 271, 117, 29);
+			  add(submitButton);
+			  
+			  JButton cancelButton = new JButton("Cancel");
+			  cancelButton.addActionListener(new ActionListener() {
+			  	public void actionPerformed(ActionEvent e) {
+			  	}
+			  });
+			  cancelButton.setBounds(259, 271, 117, 29);
+			  add(cancelButton);
    }
 }
