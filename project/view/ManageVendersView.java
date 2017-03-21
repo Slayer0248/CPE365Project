@@ -87,6 +87,20 @@ public class ManageVendersView extends JPanel {
 		btnAdd = new JButton("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			    try {
+		   	      CreateVendersView createVendersView = new CreateVendersView(sessionID, customer, null);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(createVendersView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();
+		   	   }
+		   	   catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+               }
 			}
 		});
 		btnAdd.setBounds(48, 265, 94, 29);

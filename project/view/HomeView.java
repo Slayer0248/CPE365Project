@@ -76,7 +76,7 @@ public class HomeView extends JPanel {
 	   viewTransactionsButton.setBounds(146, 72, 158, 29);
 	   add(viewTransactionsButton);
 	   
-	   JButton createTransactionButton = new JButton("Create Transaction");
+	   /*JButton createTransactionButton = new JButton("Create Transaction");
 	   createTransactionButton.addActionListener(new ActionListener() {
 	   	public void actionPerformed(ActionEvent e) {
 	   	   try {
@@ -97,7 +97,7 @@ public class HomeView extends JPanel {
 	   	}
 	   });
 	   createTransactionButton.setBounds(146, 104, 158, 29);
-	   add(createTransactionButton);
+	   add(createTransactionButton);*/
 	   
 	   JButton makePaymentButton = new JButton("Make Payment");
 	   makePaymentButton.addActionListener(new ActionListener() {
@@ -118,7 +118,7 @@ public class HomeView extends JPanel {
            }
 	   	}
 	   });
-	   makePaymentButton.setBounds(146, 136, 158, 29);
+	   makePaymentButton.setBounds(146, 104, 158, 29);
 	   add(makePaymentButton);
 	   
 	   JButton manageCardsButton = new JButton("Manage Cards");
@@ -140,7 +140,7 @@ public class HomeView extends JPanel {
            }
 	   	}
 	   });
-	   manageCardsButton.setBounds(146, 168, 158, 29);
+	   manageCardsButton.setBounds(146, 136, 158, 29);
 	   add(manageCardsButton);
 	   
 	   JButton manageVendersButton = new JButton("Manage Venders");
@@ -162,7 +162,7 @@ public class HomeView extends JPanel {
            }
 	   	}
 	   });
-	   manageVendersButton.setBounds(146, 200, 158, 29);
+	   manageVendersButton.setBounds(146, 168, 158, 29);
 	   add(manageVendersButton);
    }
 }

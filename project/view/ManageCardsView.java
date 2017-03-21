@@ -20,7 +20,9 @@ public class ManageCardsView extends JPanel {
    private JPanel cardsPanel;
    private JScrollPane cardsScrollPane;
    private String[] columnNames = {"Card #", "Type", "Credit limit", "Balance", "Active", "Current"};
-   private ArrayList<Integer> editStates = new ArrayList<Integer>();
+   //private ArrayList<Integer> editStates = new ArrayList<Integer>();
+   private ArrayList<CreditCard> cardsOwned = new ArrayList<CreditCard>();
+   private ArrayList<Ownership> ownerships = new ArrayList<Ownership>();
    private GeneralTableModel tModel;
    private JButton btnAdd;
    private JButton btnDelete;
@@ -97,6 +99,20 @@ public class ManageCardsView extends JPanel {
 		btnAdd = new JButton("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			    try {
+		   	      CreateCardsView createCardsView = new CreateCardsView(sessionID, customer, null);
+				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  frame.remove(current);
+				  frame.invalidate();
+				  frame.add(createCardsView);
+				  //frame.pack();
+				  frame.revalidate();
+				  frame.repaint();
+		   	   }
+		   	   catch (Exception ex) {
+                  ex.printStackTrace(System.out);
+               }
 			}
 		});
 		btnAdd.setBounds(48, 265, 94, 29);
