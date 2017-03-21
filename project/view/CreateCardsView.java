@@ -29,10 +29,11 @@ public class CreateCardsView extends JPanel {
 
    private DBAccess dbaccess;
    
-   public CreateCardsView(int id, Customer cust, CreditCard card) {
+   public CreateCardsView(int id, Customer cust, CreditCard card, Ownership ownership) {
       sessionID = id;
       customer = cust;
       curCard = card; //if null, the we're creating a new card
+      curOwnership = ownership;
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
 	  

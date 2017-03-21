@@ -12,13 +12,15 @@ import project.model.Customer;
 public class ManageVendersView extends JPanel {
    private int sessionID;
    private Customer customer;
+   private DBAccess dbaccess;
    
    private JTable vendersTable;
    private JTextArea errorMsgLabel;
    private JPanel vendersPanel;
    private JScrollPane vendersScrollPane;
-   private String[] columnNames = {"Vender ID", "name", "offices", "member", "discount"};
-   private ArrayList<Integer> editStates = new ArrayList<Integer>();
+   //private String[] columnNames = {"Vender ID", "name", "offices", "member", "discount"};
+   private String[] columnNames = {"Vender ID", "name", "offices"};
+   private ArrayList<Vender> venders = new ArrayList<Vender>();
    private JButton btnAdd;
    private JButton btnDelete;
    private JButton btnUpdate;
@@ -27,9 +29,11 @@ public class ManageVendersView extends JPanel {
    public ManageVendersView(int id, Customer cust) {
       sessionID = id;
       customer = cust;
+      dbaccess = new DBAccess();
       setLayout(null);
 	  setBounds(0, 0, 450, 300); 
 	  
+	  try {
 	  JLabel nameLabel = new JLabel(customer.getName());
 		nameLabel.setBounds(6, 6, 94, 16);
 		add(nameLabel);
@@ -121,26 +125,24 @@ public class ManageVendersView extends JPanel {
 		});
 		btnUpdate.setBounds(306, 265, 94, 29);
 		add(btnUpdate);
+		
+		}
+	    catch (Exception ex) {
+           ex.printStackTrace(System.out);
+        }
    }
 
-	private Object[][] getTableContent() {
-		int rowCount = 1;
-		Object[][] result = new Object[rowCount][columnNames.length];
-		for (int i=0; i<rowCount; i++) {
-			if (i<rowCount-1) {
-				
-				
-			}
-			else {
-				JButton btnAdd = new JButton("+");
-				btnAdd.setBounds(0, 0, 20, 29);
-				result[i][0] = btnAdd;
-				
-				for (int j=1; j<columnNames.length; j++) {
-					result[i][j] = "";
-				}
-				
-			}
+	private Object[][] getTableContent() throws Exception {
+	    dbaccess.open();
+		venders = dbaccess.runVenderSelect("select * from Venders;");
+		dbaccess.close();
+		
+		Object[][] result = new Object[venders.size()][columnNames.length];
+		for (int i=0; i<venders.size(); i++) {
+			Vender vender = venders.get(i);
+			result[i][0] = "" + vender.getID();
+			result[i][1] = vender.getName();
+			result[i][2] = vender.getOffices();
 		}
 		return result;
 	}

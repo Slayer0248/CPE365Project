@@ -14,6 +14,7 @@ import project.model.Customer;
 public class ManageCardsView extends JPanel {
    private int sessionID;
    private Customer customer;
+   private DBAccess dbaccess;
    
    private JTable cardsTable;
    private JTextArea errorMsgLabel;
@@ -32,8 +33,10 @@ public class ManageCardsView extends JPanel {
       sessionID = id;
       customer = cust;
       setLayout(null);
+      dbaccess = new DBAccess();
 	  setBounds(0, 0, 450, 300); 
 	  
+	  try {
 	  JLabel nameLabel = new JLabel(customer.getName());
 		nameLabel.setBounds(6, 6, 94, 16);
 		add(nameLabel);
@@ -43,8 +46,8 @@ public class ManageCardsView extends JPanel {
 		add(cardsPanel);
 		cardsPanel.setLayout(new BorderLayout(0, 0));
 		
-		tModel = new GeneralTableModel(getTableContent(), columnNames);
-		cardsTable = new JTable(tModel);
+		//tModel = new GeneralTableModel(getTableContent(), columnNames);
+		cardsTable = new JTable(getTableContent(), columnNames);
 		//TableColumn addColumn = cardsTable.getColumnModel().getColumn(0);
 		//DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		/*cardsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -100,7 +103,7 @@ public class ManageCardsView extends JPanel {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			    try {
-		   	      CreateCardsView createCardsView = new CreateCardsView(sessionID, customer, null);
+		   	      CreateCardsView createCardsView = new CreateCardsView(sessionID, customer, null, null);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
 				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
 				  frame.remove(current);
@@ -133,26 +136,35 @@ public class ManageCardsView extends JPanel {
 		});
 		btnUpdate.setBounds(306, 265, 94, 29);
 		add(btnUpdate);
+		
+	    }
+		catch (Exception ex) {
+           ex.printStackTrace(System.out);
+        }
    }
    
-	private Object[][] getTableContent() {
-		int rowCount = 1;
-		Object[][] result = new Object[rowCount][columnNames.length];
-		for (int i=0; i<rowCount; i++) {
-			if (i<rowCount-1) {
-				
-				
-			}
-			else {
-				JButton btnAdd = new JButton("+");
-				btnAdd.setBounds(0, 0, 20, 29);
-				result[i][0] = btnAdd;
-				
-				for (int j=1; j<columnNames.length; j++) {
-					result[i][j] = "";
-				}
-				
-			}
+	private Object[][] getTableContent() throws Exception {
+	    cardsOwned = new ArrayList<CreditCard>();
+	    //ownerships = new ArrayList<Ownership>();
+	    dbaccess.open();
+	    ownerships = dbaccess.runOwnershipSelect("select * from Ownership where customerID="+customer.getID()+";");
+	    for (int i=0; i<ownerships.size(); i++) {
+			CreditCard card = dbaccess.runCreditCardSelect("select * from CreditCards where cardNum=\""+ownerships.get(i).getCardNumber() +"\";").get(0);
+			cardsOwned.add(card);
+		}
+		dbaccess.close();
+	    
+		//int rowCount = 1;
+		Object[][] result = new Object[cardsOwned.size()][columnNames.length];
+		for (int i=0; i<cardsOwned.size(); i++) {
+			CreditCard card = cardsOwned.get(i);
+			Ownership owner = ownerships.get(i);
+			result[i][0] = card.getCardNumber();
+			result[i][1] = dbaccess.convertTypeToDB(card.getType());
+			result[i][2] = "" + card.getCreditLimit();
+			result[i][3] = "" + card.getBalance();
+			result[i][4] = (card.isActive() ? "Yes":"No");
+			result[i][5] = (owner.isCurrent() ? "Yes":"No");
 		}
 		return result;
 	}
