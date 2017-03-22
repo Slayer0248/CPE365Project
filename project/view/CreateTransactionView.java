@@ -12,6 +12,7 @@ import project.model.DBAccess;
 import project.model.Customer;
 import project.model.Transaction;
 import project.model.Ownership;
+import project.model.Vender;
 
 public class CreateTransactionView extends JPanel {
    private final JLabel cardNumLabel = new JLabel("Card Number:");
@@ -84,36 +85,98 @@ public class CreateTransactionView extends JPanel {
 	   lblDate.setBounds(113, 179, 38, 16);
 	   add(lblDate);
 	   
-	   venderRadioButton = new JRadioButton("Vender");
-	   venderRadioButton.setBounds(160, 51, 81, 23);
-	   venderRadioButton.setActionCommand("0");
-	   add(venderRadioButton);
+	   // venderRadioButton = new JRadioButton("Vender");
+	   // venderRadioButton.setBounds(160, 51, 81, 23);
+	   // venderRadioButton.setActionCommand("0");
+	   // venderRadioButton.addItemListener(new ItemListener() {
+	   // 	   public void itemStateChanged(ItemEvent e) {
+		  //  	   	if (e.getStateChange() == ItemEvent.SELECTED) {
+		  //  	   		lblDate.setVisible(true);
+		  //  	   	}
+		  //  	   	else
+		  //  	   		lblDate.setVisible(false);
+	   // 	   }
+	   // });
+	   // add(venderRadioButton);
 	   
-	   customerRadioButton = new JRadioButton("Customer");
-	   customerRadioButton.setBounds(249, 51, 94, 23);
-	   customerRadioButton.setActionCommand("1");
-	   add(customerRadioButton);
+	   // customerRadioButton = new JRadioButton("Customer");
+	   // customerRadioButton.setBounds(249, 51, 94, 23);
+	   // customerRadioButton.setActionCommand("1");
+	   // add(customerRadioButton);
 	   
 	   typeGroup = new ButtonGroup();
 	   typeGroup.add(venderRadioButton);
 	   typeGroup.add(customerRadioButton);
 	   
-	   recieverComboBox = new JComboBox();
-	   recieverComboBox.setBounds(155, 79, 175, 27);
-	   add(recieverComboBox);
+
 	   
 	   try {
 		   dbaccess.open();
 		   ArrayList<Ownership> owns = dbaccess.runOwnershipSelect("select * from Ownership where customerID=" + cust.getID() + ";");
+		   ArrayList<Vender> vends = dbaccess.runVenderSelect("select * from Venders;");
+		   ArrayList<Customer> customs = dbaccess.runCustomerSelect("select * from Customers;");
 		   dbaccess.close();
 		   String[] temp = new String[owns.size()];
 	   	   for (int i=0; i < owns.size(); i++) {
-	   	   		temp[i]=owns.get(i).getCardNumber();
+	   	   		temp[i] = owns.get(i).getCardNumber();
 	   	   }
+
+	   	   String[] cids = new String[customs.size()];
+	   	   for (int i=0; i < customs.size(); i++) {
+	   	   		cids[i] = Integer.toString(customs.get(i).getID());
+	   	   }
+
+	   	   String[] vids = new String[vends.size()];
+	       for (int i=0; i < vends.size(); i++) {
+	       		vids[i] = Integer.toString(vends.get(i).getID());
+	       }
 
 	   	   cardComboBox = new JComboBox(temp);
 	       cardComboBox.setBounds(155, 111, 175, 27);
 	       add(cardComboBox);
+
+	       recieverComboBox = new JComboBox(vids);
+		   recieverComboBox.setBounds(155, 79, 175, 27);
+		   add(recieverComboBox);
+
+	       venderRadioButton = new JRadioButton("Vender");
+	       customerRadioButton = new JRadioButton("Customer");
+	   	   venderRadioButton.setBounds(160, 51, 81, 23);
+	       venderRadioButton.setActionCommand("0");
+	       venderRadioButton.setSelected(true);
+	       venderRadioButton.addItemListener(new ItemListener() {
+		   	   public void itemStateChanged(ItemEvent e) {
+
+			   	   	if (e.getStateChange() == ItemEvent.SELECTED) {
+						recieverComboBox.removeAllItems();
+						remove(recieverComboBox);
+						recieverComboBox = new JComboBox(vids);
+						recieverComboBox.setBounds(155, 79, 175, 27);
+		   				add(recieverComboBox);
+		   				customerRadioButton.setSelected(false);	
+			   	   	}	   	   		    
+		   	   }
+	   	   });
+	   	   add(venderRadioButton);
+
+	   	   
+		   customerRadioButton.setBounds(249, 51, 94, 23);
+		   customerRadioButton.setActionCommand("1");
+		   customerRadioButton.addItemListener(new ItemListener() {
+		   	   public void itemStateChanged(ItemEvent e) {
+
+			   	   	if (e.getStateChange() == ItemEvent.SELECTED) {
+						recieverComboBox.removeAllItems();
+						remove(recieverComboBox);
+						recieverComboBox = new JComboBox(cids);
+						recieverComboBox.setBounds(155, 79, 175, 27);
+		   				add(recieverComboBox);	
+		   				venderRadioButton.setSelected(false);
+			   	   	}	   	   		    
+		   	   }
+	   	   });
+		   add(customerRadioButton);
+
 	   }
 	   catch (Exception ex) {
            ex.printStackTrace(System.out);
