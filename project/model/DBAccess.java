@@ -83,8 +83,9 @@ public class DBAccess {
       while (rs.next()) {
          int id = rs.getInt("customerID");
          String card = rs.getString("cardNum");
+         int primary = rs.getInt("primaryCard");
          boolean current = (rs.getInt("current") == 1);
-         Ownership owner = new Ownership(id, card);
+         Ownership owner = new Ownership(id, card, primary);
          owner.setCurrent(current);
          //use row to fill in ownership
          owners.add(owner);
