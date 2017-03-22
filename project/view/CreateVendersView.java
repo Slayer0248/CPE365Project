@@ -26,6 +26,7 @@ public class CreateVendersView extends JPanel {
       	sessionID = id;
       customer = cust;
       curVender = vender; //if null, the we're creating a new vender
+      dbaccess = new DBAccess();
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
 		
