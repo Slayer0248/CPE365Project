@@ -21,6 +21,7 @@ public class TransactionsView extends JPanel {
    private JScrollPane transactionsScrollPane;
    private String[] columnNames = {"ID", "Card #", "Reciever Type", "Reciever ID", "Date", "Amount"};
    private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+
    private JButton btnAdd;
    private JButton btnDelete;
    private JButton btnUpdate;
@@ -156,24 +157,6 @@ public class TransactionsView extends JPanel {
 		btnDelete.setBounds(178, 265, 94, 29);
 		add(btnDelete);
 		
-		/*btnUpdate = new JButton("Update");
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			  if (transactionsTable.getSelectedRow() == -1) {
-			      //error case
-			      errorMsgLabel.setText("Error: No row selected to update.");
-					errorMsgLabel.setForeground(Color.RED);
-					errorMsgLabel.setVisible(true);
-				  
-				  errorMsgLabel.repaint();
-			   }
-			   else {
-			      //delete and refresh
-			   }
-			}
-		});
-		btnUpdate.setBounds(306, 265, 94, 29);
-		add(btnUpdate);*/
 		
 		}
 		catch (Exception ex) {
