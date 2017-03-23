@@ -97,7 +97,7 @@ public class CreateTransactionView extends JPanel {
 		   dbaccess.open();
 		   owns = dbaccess.runOwnershipSelect("select * from Ownership where customerID=" + cust.getID() + ";");
 		   vends = dbaccess.runVenderSelect("select * from Venders;");
-		   customs = dbaccess.runCustomerSelect("select * from Customers;");
+		   customs = dbaccess.runCustomerSelect("select * from Customers where customerID != " + cust.getID() + ";");
 		   dbaccess.close();
 
 	   	   cardComboBox = new JComboBox(owns.toArray());
