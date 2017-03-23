@@ -25,6 +25,10 @@ public class CreateTransactionView extends JPanel {
    private JComboBox cardComboBox;
    private ButtonGroup typeGroup;
 
+   private ArrayList<Ownership> owns;
+   private ArrayList<Customer> customs;
+   private ArrayList<Vender> vends;
+
    private int sessionID;
    private Customer customer;
    //private Transaction curTrans;
@@ -91,9 +95,9 @@ public class CreateTransactionView extends JPanel {
 	   
 	   try {
 		   dbaccess.open();
-		   ArrayList<Ownership> owns = dbaccess.runOwnershipSelect("select * from Ownership where customerID=" + cust.getID() + ";");
-		   ArrayList<Vender> vends = dbaccess.runVenderSelect("select * from Venders;");
-		   ArrayList<Customer> customs = dbaccess.runCustomerSelect("select * from Customers;");
+		   owns = dbaccess.runOwnershipSelect("select * from Ownership where customerID=" + cust.getID() + ";");
+		   vends = dbaccess.runVenderSelect("select * from Venders;");
+		   customs = dbaccess.runCustomerSelect("select * from Customers;");
 		   dbaccess.close();
 
 	   	   cardComboBox = new JComboBox(owns.toArray());
@@ -174,13 +178,34 @@ public class CreateTransactionView extends JPanel {
 			  	public void actionPerformed(ActionEvent e) {
 			  	
 			  	try {
-			  	  String amt;
-			  	  String date;
-			  	  boolean vendButton;
-			  	  boolean custButton;
+			  	  String amt = amountField.getText();
+			  	  String date = dateField.getText();
+			  	  boolean vendButton = venderRadioButton.isSelected();
+			  	  boolean custButton = customerRadioButton.isSelected();
+			  	  Ownership ownerCard = owns.get(cardComboBox.getSelectedIndex());
+			  	  Vender vSelect;
+			  	  Customer cSelect;
+			  	  if (vendButton)
+			  	  	vSelect = vends.get(recieverComboBox.getSelectedIndex());
+			  	  if (custButton)
+			  	  	cSelect = customs.get(recieverComboBox.getSelectedIndex());
+
+			  	  if (amt.isEmpty() || date.isEmpty()) {
+			  	  	errorMsgLabel.setText("Error: Must fill out all fields.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint();
+			  	  }
+			  	  else if (Integer.parseInt(amt) <= 0) {
+			  	  	errorMsgLabel.setText("Error: Amount must be greater than 0.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint();
+			  	  }
+
 			  	  // persist transaction
 
-		   	      TransactionsView transView = new TransactionsView(sessionID, customer);
+		   	      /*TransactionsView transView = new TransactionsView(sessionID, customer);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
 				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
 				  frame.remove(current);
@@ -188,7 +213,7 @@ public class CreateTransactionView extends JPanel {
 				  frame.add(transView);
 				  //frame.pack();
 				  frame.revalidate();
-				  frame.repaint();
+				  frame.repaint();*/
 		   	   }
 		   	   catch (Exception ex) {
                   ex.printStackTrace(System.out);
