@@ -213,9 +213,6 @@ public class CreateCardsView extends JPanel {
 			  	  dbaccess.runUpdate("Insert into Ownership(customerID, cardNum, current) Values ("+customer.getID()+", \""+cardNum+"\", " + currentVal+");");
 			  	  dbaccess.close();
 			  	  
-			  	 
-			  	  
-		          
 		          ManageCardsView manageCardsView = new ManageCardsView(sessionID, customer);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
 				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);

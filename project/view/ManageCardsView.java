@@ -48,7 +48,6 @@ public class ManageCardsView extends JPanel {
 		cardsPanel.setLayout(new BorderLayout(0, 0));
 		
 		//tModel = new GeneralTableModel(getTableContent(), columnNames);
-		cardsTable = new JTable(getTableContent(), columnNames);
 		//TableColumn addColumn = cardsTable.getColumnModel().getColumn(0);
 		//DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		/*cardsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -58,14 +57,8 @@ public class ManageCardsView extends JPanel {
               System.out.println(cardsTable.getValueAt(cardsTable.getSelectedRow(), 0).toString());
            }
         });*/
-		
-		//cardsTable = new JTable();
+		cardsTable = new JTable(getTableContent(), columnNames);
 		cardsTable.setFillsViewportHeight(true);
-		
-		cardsScrollPane = new JScrollPane(cardsTable);
-		cardsScrollPane.setPreferredSize(new Dimension(400, 160));
-		cardsPanel.add(cardsScrollPane, BorderLayout.CENTER);
-		
 		cardsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		cardsTable.getColumnModel().getColumn(0).setPreferredWidth(60);
 		cardsTable.getColumnModel().getColumn(1).setPreferredWidth(110);
@@ -73,6 +66,10 @@ public class ManageCardsView extends JPanel {
 		cardsTable.getColumnModel().getColumn(3).setPreferredWidth(60);
 		cardsTable.getColumnModel().getColumn(4).setPreferredWidth(45);
 		cardsTable.getColumnModel().getColumn(5).setPreferredWidth(50);
+
+		cardsScrollPane = new JScrollPane(cardsTable);
+		cardsScrollPane.setPreferredSize(new Dimension(400, 160));
+		cardsPanel.add(cardsScrollPane, BorderLayout.CENTER);
 		
 		errorMsgLabel = new JTextArea("");
 		errorMsgLabel.setOpaque(false);
@@ -149,9 +146,18 @@ public class ManageCardsView extends JPanel {
 			        //dbaccess.runUpdate("delete from Ownership where customerID = " +customer.getID()+ "and cardNum = \"" +card.getCardNumber()+"\";");
 			        dbaccess.runUpdate("delete from CreditCards where cardNum = \"" +card.getCardNumber()+"\";");
 			        dbaccess.close();
-			        
-			        cardsTable = new JTable(getTableContent(), columnNames);
-			        cardsTable.repaint();
+
+			        ManageCardsView manageCardsView = new ManageCardsView(sessionID, customer);
+				  	JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  	JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  	frame.remove(current);
+				  	frame.invalidate();
+				  	frame.add(manageCardsView);
+				  	//frame.pack();
+				  	frame.revalidate();
+				  	frame.repaint();
+			        // cardsTable = new JTable(getTableContent(), columnNames);
+			        // cardsTable.repaint();
 			     }
 		   	     catch (Exception ex) {
                     ex.printStackTrace(System.out);
@@ -231,4 +237,5 @@ public class ManageCardsView extends JPanel {
 		}
 		return result;
 	}
+
 }

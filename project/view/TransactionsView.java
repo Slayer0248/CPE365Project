@@ -128,6 +128,28 @@ public class TransactionsView extends JPanel {
 			   }
 			   else {
 			      //delete and refresh
+			   	  Transaction curTrans = transactions.get(transactionsTable.getSelectedRow());
+
+			   	  try {
+			        dbaccess.open();
+			        //dbaccess.runUpdate("delete from Ownership where customerID = " +customer.getID()+ "and cardNum = \"" +card.getCardNumber()+"\";");
+			        dbaccess.runUpdate("delete from Transactions where transactionID = " + curTrans.getID()+";");
+			        dbaccess.close();
+
+			        TransactionsView transView = new TransactionsView(sessionID, customer);
+				  	JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  	JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  	frame.remove(current);
+				  	frame.invalidate();
+				  	frame.add(transView);
+				  	//frame.pack();
+				  	frame.revalidate();
+				  	frame.repaint();
+			     }
+		   	     catch (Exception ex) {
+                    ex.printStackTrace(System.out);
+                 }
+
 			   }
 			}
 		});
