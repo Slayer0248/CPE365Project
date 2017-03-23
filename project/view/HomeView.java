@@ -20,7 +20,7 @@ public class HomeView extends JPanel {
 	  setBounds(0, 0, 450, 300);
 	  
 	   JLabel nameLabel = new JLabel(cust.getName());
-	   nameLabel.setBounds(6, 6, 61, 16);
+	   nameLabel.setBounds(6, 6, 250, 16);
 	   add(nameLabel);
 	   
 	   JButton btnLogOut = new JButton("Log out");

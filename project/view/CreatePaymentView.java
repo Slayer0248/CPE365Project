@@ -166,10 +166,15 @@ public class CreatePaymentView extends JPanel {
 			  	       dbaccess.runUpdate(query);
 			  	       dbaccess.close();
 			  	       
-			  	       errorMsgLabel.setText("Successfully made payment on credit card.");
-					   errorMsgLabel.setForeground(Color.GREEN);
-					   errorMsgLabel.setVisible(true);  
-					   errorMsgLabel.repaint(); 
+			  	       ManageCardsView manageCardsView = new ManageCardsView(sessionID, customer);
+					   JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+					   JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+					   frame.remove(current);
+					   frame.invalidate();
+					   frame.add(manageCardsView);
+					   //frame.pack();
+					   frame.revalidate();
+					   frame.repaint();
 			  	    }
 			     
 			     }

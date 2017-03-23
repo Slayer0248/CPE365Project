@@ -34,7 +34,7 @@ public class ManageVendersView extends JPanel {
 	  setBounds(0, 0, 450, 300); 
 	  
 	  try {
-	  JLabel nameLabel = new JLabel(customer.getName());
+	    JLabel nameLabel = new JLabel(customer.getName());
 		nameLabel.setBounds(6, 6, 94, 16);
 		add(nameLabel);
 		
