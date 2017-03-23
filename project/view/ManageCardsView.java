@@ -21,7 +21,7 @@ public class ManageCardsView extends JPanel {
    private JTextArea errorMsgLabel;
    private JPanel cardsPanel;
    private JScrollPane cardsScrollPane;
-   private String[] columnNames = {"Card #", "Type", "Credit limit", "Balance", "Active", "Current"};
+   private String[] columnNames = {"Card #", "Type", "Limit", "Balance", "Active", "Current"};
    //private ArrayList<Integer> editStates = new ArrayList<Integer>();
    private ArrayList<CreditCard> cardsOwned = new ArrayList<CreditCard>();
    private ArrayList<Ownership> ownerships = new ArrayList<Ownership>();
@@ -43,7 +43,7 @@ public class ManageCardsView extends JPanel {
 		add(nameLabel);
 		
 		cardsPanel = new JPanel();
-		cardsPanel.setBounds(48, 90, 354, 160);
+		cardsPanel.setBounds(48, 90, 400, 160);
 		add(cardsPanel);
 		cardsPanel.setLayout(new BorderLayout(0, 0));
 		
@@ -63,9 +63,16 @@ public class ManageCardsView extends JPanel {
 		cardsTable.setFillsViewportHeight(true);
 		
 		cardsScrollPane = new JScrollPane(cardsTable);
-		cardsScrollPane.setPreferredSize(new Dimension(354, 160));
+		cardsScrollPane.setPreferredSize(new Dimension(400, 160));
 		cardsPanel.add(cardsScrollPane, BorderLayout.CENTER);
 		
+		cardsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		cardsTable.getColumnModel().getColumn(0).setPreferredWidth(60);
+		cardsTable.getColumnModel().getColumn(1).setPreferredWidth(110);
+		cardsTable.getColumnModel().getColumn(2).setPreferredWidth(70);
+		cardsTable.getColumnModel().getColumn(3).setPreferredWidth(60);
+		cardsTable.getColumnModel().getColumn(4).setPreferredWidth(45);
+		cardsTable.getColumnModel().getColumn(5).setPreferredWidth(50);
 		
 		errorMsgLabel = new JTextArea("");
 		errorMsgLabel.setOpaque(false);
@@ -75,7 +82,7 @@ public class ManageCardsView extends JPanel {
 		errorMsgLabel.setVisible(false);
 		errorMsgLabel.setForeground(Color.RED);
 		errorMsgLabel.setLineWrap(true);
-		errorMsgLabel.setBounds(48, 45, 354, 20);
+		errorMsgLabel.setBounds(48, 45, 400, 20);
 		add(errorMsgLabel);
 		
 		JButton btnHome = new JButton("Home");

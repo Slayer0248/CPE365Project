@@ -40,7 +40,7 @@ public class TransactionsView extends JPanel {
 		//Possible addition: filter by card and date range
 		
 		transactionsPanel = new JPanel();
-		transactionsPanel.setBounds(48, 90, 354, 160);
+		transactionsPanel.setBounds(48, 90, 390, 160);
 		add(transactionsPanel);
 		transactionsPanel.setLayout(new BorderLayout(0, 0));
 		
@@ -49,8 +49,16 @@ public class TransactionsView extends JPanel {
 		transactionsTable.setFillsViewportHeight(true);
 		
 		transactionsScrollPane = new JScrollPane(transactionsTable);
-		transactionsScrollPane.setPreferredSize(new Dimension(354, 160));
+		transactionsScrollPane.setPreferredSize(new Dimension(390, 160));
 		transactionsPanel.add(transactionsScrollPane, BorderLayout.CENTER);
+
+		transactionsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		transactionsTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+		transactionsTable.getColumnModel().getColumn(1).setPreferredWidth(70);
+		transactionsTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+		transactionsTable.getColumnModel().getColumn(3).setPreferredWidth(70);
+		transactionsTable.getColumnModel().getColumn(4).setPreferredWidth(80);
+		transactionsTable.getColumnModel().getColumn(5).setPreferredWidth(60);
 		
 		errorMsgLabel = new JTextArea("");
 		errorMsgLabel.setOpaque(false);
@@ -60,7 +68,7 @@ public class TransactionsView extends JPanel {
 		errorMsgLabel.setVisible(false);
 		errorMsgLabel.setForeground(Color.RED);
 		errorMsgLabel.setLineWrap(true);
-		errorMsgLabel.setBounds(48, 45, 354, 20);
+		errorMsgLabel.setBounds(48, 45, 390, 20);
 		add(errorMsgLabel);
 
 		JButton btnHome = new JButton("Home");

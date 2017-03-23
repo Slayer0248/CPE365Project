@@ -19,7 +19,7 @@ public class ManageVendersView extends JPanel {
    private JPanel vendersPanel;
    private JScrollPane vendersScrollPane;
    //private String[] columnNames = {"Vender ID", "name", "offices", "member", "discount"};
-   private String[] columnNames = {"Vender ID", "name", "offices"};
+   private String[] columnNames = {"Vender ID", "Name", "Offices"};
    private ArrayList<Vender> venders = new ArrayList<Vender>();
    private JButton btnAdd;
    private JButton btnDelete;
