@@ -62,8 +62,8 @@ public class CreatePaymentView extends JPanel {
 		amountLabel.setBounds(93, 147, 54, 16);
 		add(amountLabel);
 		   
-		JLabel lblDate = new JLabel("Date:");
-		lblDate.setBounds(113, 179, 38, 16);
+		JLabel lblDate = new JLabel("Date (mm/dd/yyyy):");
+		lblDate.setBounds(21, 179, 150, 16);
 		add(lblDate);
 		
 		try {
@@ -143,7 +143,7 @@ public class CreatePaymentView extends JPanel {
 					errorMsgLabel.repaint(); 
 			  	 }
 			  	 else if (!isValidDate(dateStr, "MM/dd/yyyy")) {
-			  	    errorMsgLabel.setText("Error: Date is not in MM/dd/yyyy format.");
+			  	    errorMsgLabel.setText("Error: Date is not in mm/dd/yyyy format.");
 					errorMsgLabel.setForeground(Color.RED);
 					errorMsgLabel.setVisible(true);  
 					errorMsgLabel.repaint(); 

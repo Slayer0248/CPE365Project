@@ -85,7 +85,7 @@ public class CreateTransactionView extends JPanel {
 	   amountLabel.setBounds(93, 147, 54, 16);
 	   add(amountLabel);
 	   
-	   JLabel lblDate = new JLabel("Date (yyyy-mm-dd):");
+	   JLabel lblDate = new JLabel("Date (mm/dd/yyyy):");
 	   lblDate.setBounds(21, 179, 150, 16);
 	   add(lblDate);
 	   
@@ -209,15 +209,18 @@ public class CreateTransactionView extends JPanel {
 					errorMsgLabel.setVisible(true);  
 					errorMsgLabel.repaint();
 			  	  }
-			  	  /*else if () {
-					date validation tbd
-			  	  }*/
+			  	  else if (!isValidDate(tDate, "MM/dd/yyyy")) {
+			  	    errorMsgLabel.setText("Error: Date is not in mm/dd/yyyy format.");
+					errorMsgLabel.setForeground(Color.RED);
+					errorMsgLabel.setVisible(true);  
+					errorMsgLabel.repaint(); 
+				  }
 			  	  else {
 			  	  // persist transaction
 			  	  	dbaccess.open();
 			  	  	String insertSt = "insert into Transactions(customerID, cardNum, recieverID, recieverType, transactionDate, amount) " +
 			  	  		"values (" + cust.getID() + ", \'" + ownerCard.getCardNumber() + "\', " + curReceiverID + ", " + curReceiverType +
-			  	  			", \'" + tDate + "\', " + amt + ");";
+			  	  			", STR_TO_DATE('"+tDate+"', '%m/%d/%Y'), " + amt + ");";
 			  	  	dbaccess.runUpdate(insertSt);
 			  	  	dbaccess.close();
 		   	      	TransactionsView transView = new TransactionsView(sessionID, customer);
