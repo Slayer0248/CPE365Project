@@ -85,7 +85,7 @@ public class CreateTransactionView extends JPanel {
 	   amountLabel.setBounds(93, 147, 54, 16);
 	   add(amountLabel);
 	   
-	   JLabel lblDate = new JLabel("Date (mm/dd/yyyy):");
+	   JLabel lblDate = new JLabel("Date (yyyy-mm-dd):");
 	   lblDate.setBounds(21, 179, 150, 16);
 	   add(lblDate);
 	   
@@ -179,18 +179,25 @@ public class CreateTransactionView extends JPanel {
 			  	
 			  	try {
 			  	  String amt = amountField.getText();
-			  	  String date = dateField.getText();
+			  	  String tDate = dateField.getText();
 			  	  boolean vendButton = venderRadioButton.isSelected();
 			  	  boolean custButton = customerRadioButton.isSelected();
 			  	  Ownership ownerCard = owns.get(cardComboBox.getSelectedIndex());
 			  	  Vender vSelect;
 			  	  Customer cSelect;
-			  	  if (vendButton)
-			  	  	vSelect = vends.get(recieverComboBox.getSelectedIndex());
-			  	  if (custButton)
-			  	  	cSelect = customs.get(recieverComboBox.getSelectedIndex());
+			  	  int curReceiverID = 0;
+			  	  int curReceiverType = (vendButton) ? 1 : 0; //1 if vend, 0 if cust
 
-			  	  if (amt.isEmpty() || date.isEmpty()) {
+			  	  if (vendButton) {
+			  	  	vSelect = vends.get(recieverComboBox.getSelectedIndex());
+			  	  	curReceiverID = vSelect.getID();
+			  	  }
+			  	  if (custButton) {
+			  	  	cSelect = customs.get(recieverComboBox.getSelectedIndex());
+			  	  	curReceiverID = cSelect.getID();
+			  	  }
+
+			  	  if (amt.isEmpty() || tDate.isEmpty()) {
 			  	  	errorMsgLabel.setText("Error: Must fill out all fields.");
 					errorMsgLabel.setForeground(Color.RED);
 					errorMsgLabel.setVisible(true);  
@@ -202,18 +209,27 @@ public class CreateTransactionView extends JPanel {
 					errorMsgLabel.setVisible(true);  
 					errorMsgLabel.repaint();
 			  	  }
-
+			  	  /*else if () {
+					date validation tbd
+			  	  }*/
+			  	  else {
 			  	  // persist transaction
-
-		   	      /*TransactionsView transView = new TransactionsView(sessionID, customer);
-				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
-				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
-				  frame.remove(current);
-				  frame.invalidate();
-				  frame.add(transView);
-				  //frame.pack();
-				  frame.revalidate();
-				  frame.repaint();*/
+			  	  	dbaccess.open();
+			  	  	String insertSt = "insert into Transactions(customerID, cardNum, recieverID, recieverType, transactionDate, amount) " +
+			  	  		"values (" + cust.getID() + ", \'" + ownerCard.getCardNumber() + "\', " + curReceiverID + ", " + curReceiverType +
+			  	  			", \'" + tDate + "\', " + amt + ");";
+			  	  	dbaccess.runUpdate(insertSt);
+			  	  	dbaccess.close();
+		   	      	TransactionsView transView = new TransactionsView(sessionID, customer);
+				  	JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
+				  	JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
+				  	frame.remove(current);
+				  	frame.invalidate();
+				  	frame.add(transView);
+				  	//frame.pack();
+				  	frame.revalidate();
+				  	frame.repaint();
+				  }
 		   	   }
 		   	   catch (Exception ex) {
                   ex.printStackTrace(System.out);
