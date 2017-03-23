@@ -41,5 +41,9 @@ public class Vender {
    public void setOffices(String offices) {
       venderOffices = offices;
    }
+
+   public String toString() {
+      return "" + venderID + " (" + venderName + ")";
+   }
    
 }

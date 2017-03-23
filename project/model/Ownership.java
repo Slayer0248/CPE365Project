@@ -47,5 +47,8 @@ public class Ownership {
       primaryCard = state;
    }
 
+   public String toString() {
+      return cardNumber;
+   }
 
 }

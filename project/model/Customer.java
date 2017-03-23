@@ -76,7 +76,7 @@ public class Customer {
    }
    
    public String toString() {
-      String result = "Customer " + customerID + " - " + name + "  " + address + "  " + phoneNumber;
+      String result = "" + customerID + " (" + name + ")";
       return result;
    }
 }

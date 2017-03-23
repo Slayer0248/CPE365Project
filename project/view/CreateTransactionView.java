@@ -81,34 +81,13 @@ public class CreateTransactionView extends JPanel {
 	   amountLabel.setBounds(93, 147, 54, 16);
 	   add(amountLabel);
 	   
-	   JLabel lblDate = new JLabel("Date:");
-	   lblDate.setBounds(113, 179, 38, 16);
+	   JLabel lblDate = new JLabel("Date (mm/dd/yyyy):");
+	   lblDate.setBounds(21, 179, 150, 16);
 	   add(lblDate);
-	   
-	   // venderRadioButton = new JRadioButton("Vender");
-	   // venderRadioButton.setBounds(160, 51, 81, 23);
-	   // venderRadioButton.setActionCommand("0");
-	   // venderRadioButton.addItemListener(new ItemListener() {
-	   // 	   public void itemStateChanged(ItemEvent e) {
-		  //  	   	if (e.getStateChange() == ItemEvent.SELECTED) {
-		  //  	   		lblDate.setVisible(true);
-		  //  	   	}
-		  //  	   	else
-		  //  	   		lblDate.setVisible(false);
-	   // 	   }
-	   // });
-	   // add(venderRadioButton);
-	   
-	   // customerRadioButton = new JRadioButton("Customer");
-	   // customerRadioButton.setBounds(249, 51, 94, 23);
-	   // customerRadioButton.setActionCommand("1");
-	   // add(customerRadioButton);
 	   
 	   typeGroup = new ButtonGroup();
 	   typeGroup.add(venderRadioButton);
 	   typeGroup.add(customerRadioButton);
-	   
-
 	   
 	   try {
 		   dbaccess.open();
@@ -116,26 +95,12 @@ public class CreateTransactionView extends JPanel {
 		   ArrayList<Vender> vends = dbaccess.runVenderSelect("select * from Venders;");
 		   ArrayList<Customer> customs = dbaccess.runCustomerSelect("select * from Customers;");
 		   dbaccess.close();
-		   String[] temp = new String[owns.size()];
-	   	   for (int i=0; i < owns.size(); i++) {
-	   	   		temp[i] = owns.get(i).getCardNumber();
-	   	   }
 
-	   	   String[] cids = new String[customs.size()];
-	   	   for (int i=0; i < customs.size(); i++) {
-	   	   		cids[i] = Integer.toString(customs.get(i).getID());
-	   	   }
-
-	   	   String[] vids = new String[vends.size()];
-	       for (int i=0; i < vends.size(); i++) {
-	       		vids[i] = Integer.toString(vends.get(i).getID());
-	       }
-
-	   	   cardComboBox = new JComboBox(temp);
+	   	   cardComboBox = new JComboBox(owns.toArray());
 	       cardComboBox.setBounds(155, 111, 175, 27);
 	       add(cardComboBox);
 
-	       recieverComboBox = new JComboBox(vids);
+	       recieverComboBox = new JComboBox(vends.toArray());
 		   recieverComboBox.setBounds(155, 79, 175, 27);
 		   add(recieverComboBox);
 
@@ -150,7 +115,7 @@ public class CreateTransactionView extends JPanel {
 			   	   	if (e.getStateChange() == ItemEvent.SELECTED) {
 						recieverComboBox.removeAllItems();
 						remove(recieverComboBox);
-						recieverComboBox = new JComboBox(vids);
+						recieverComboBox = new JComboBox(vends.toArray());
 						recieverComboBox.setBounds(155, 79, 175, 27);
 		   				add(recieverComboBox);
 		   				customerRadioButton.setSelected(false);	
@@ -168,7 +133,7 @@ public class CreateTransactionView extends JPanel {
 			   	   	if (e.getStateChange() == ItemEvent.SELECTED) {
 						recieverComboBox.removeAllItems();
 						remove(recieverComboBox);
-						recieverComboBox = new JComboBox(cids);
+						recieverComboBox = new JComboBox(customs.toArray());
 						recieverComboBox.setBounds(155, 79, 175, 27);
 		   				add(recieverComboBox);	
 		   				venderRadioButton.setSelected(false);
@@ -209,7 +174,13 @@ public class CreateTransactionView extends JPanel {
 			  	public void actionPerformed(ActionEvent e) {
 			  	
 			  	try {
-		   	      /*TransactionsView transView = new TransactionsView(sessionID, customer);
+			  	  String amt;
+			  	  String date;
+			  	  boolean vendButton;
+			  	  boolean custButton;
+			  	  // persist transaction
+
+		   	      TransactionsView transView = new TransactionsView(sessionID, customer);
 				  JPanel current = (JPanel)(((JButton)e.getSource()).getParent());
 				  JFrame frame = (JFrame) SwingUtilities.windowForComponent(current);
 				  frame.remove(current);
@@ -217,7 +188,7 @@ public class CreateTransactionView extends JPanel {
 				  frame.add(transView);
 				  //frame.pack();
 				  frame.revalidate();
-				  frame.repaint();*/
+				  frame.repaint();
 		   	   }
 		   	   catch (Exception ex) {
                   ex.printStackTrace(System.out);
