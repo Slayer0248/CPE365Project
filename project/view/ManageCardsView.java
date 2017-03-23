@@ -21,7 +21,7 @@ public class ManageCardsView extends JPanel {
    private JTextArea errorMsgLabel;
    private JPanel cardsPanel;
    private JScrollPane cardsScrollPane;
-   private String[] columnNames = {"Card #", "Type", "Limit", "Balance", "Active", "Current"};
+   private String[] columnNames = {"Card #", "Type", "Limit", "Balance", "Active", "Current", "Primary"};
    //private ArrayList<Integer> editStates = new ArrayList<Integer>();
    private ArrayList<CreditCard> cardsOwned = new ArrayList<CreditCard>();
    private ArrayList<Ownership> ownerships = new ArrayList<Ownership>();
@@ -43,7 +43,7 @@ public class ManageCardsView extends JPanel {
 		add(nameLabel);
 		
 		cardsPanel = new JPanel();
-		cardsPanel.setBounds(48, 90, 400, 160);
+		cardsPanel.setBounds(18, 90, 475, 160);
 		add(cardsPanel);
 		cardsPanel.setLayout(new BorderLayout(0, 0));
 		
@@ -66,9 +66,10 @@ public class ManageCardsView extends JPanel {
 		cardsTable.getColumnModel().getColumn(3).setPreferredWidth(60);
 		cardsTable.getColumnModel().getColumn(4).setPreferredWidth(45);
 		cardsTable.getColumnModel().getColumn(5).setPreferredWidth(50);
+		cardsTable.getColumnModel().getColumn(6).setPreferredWidth(50);
 
 		cardsScrollPane = new JScrollPane(cardsTable);
-		cardsScrollPane.setPreferredSize(new Dimension(400, 160));
+		cardsScrollPane.setPreferredSize(new Dimension(475, 160));
 		cardsPanel.add(cardsScrollPane, BorderLayout.CENTER);
 		
 		errorMsgLabel = new JTextArea("");
@@ -234,6 +235,7 @@ public class ManageCardsView extends JPanel {
 			result[i][3] = "" + card.getBalance();
 			result[i][4] = (card.isActive() ? "Yes":"No");
 			result[i][5] = (owner.isCurrent() ? "Yes":"No");
+			result[i][6] = (owner.isPrimary() ? "Yes":"No");
 		}
 		return result;
 	}

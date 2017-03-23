@@ -20,6 +20,7 @@ public class CreateCardsView extends JPanel {
    private JTextArea errorMsgLabel;
    private JCheckBox currentCheckBox;
    private JCheckBox activeCheckBox;
+   private JCheckBox primaryCheckBox;
    private JComboBox cardTypeComboBox;
 	
 	
@@ -39,7 +40,7 @@ public class CreateCardsView extends JPanel {
       setLayout(null);
 	  setBounds(0, 0, 450, 300);
 	  
-	       cardNumLabel.setBounds(60, 83, 87, 16);
+	       cardNumLabel.setBounds(60, 123, 87, 16);
 	       add(cardNumLabel);
 	       
 	       JLabel nameLabel = new JLabel("");
@@ -69,15 +70,15 @@ public class CreateCardsView extends JPanel {
 		   add(btnHome);
 		   
 		   JLabel cardTypeLabel = new JLabel("Type:");
-		   cardTypeLabel.setBounds(113, 115, 39, 16);
+		   cardTypeLabel.setBounds(113, 155, 39, 16);
 		   add(cardTypeLabel);
 		   
 		   JLabel creditLimitLabel = new JLabel("Credit limit:");
-		   creditLimitLabel.setBounds(72, 147, 75, 16);
+		   creditLimitLabel.setBounds(72, 187, 75, 16);
 		   add(creditLimitLabel);
 		   
 		   JLabel lblBalance = new JLabel("Balance:");
-		   lblBalance.setBounds(95, 179, 57, 16);
+		   lblBalance.setBounds(95, 219, 57, 16);
 		   add(lblBalance);
 		   
 		   currentCheckBox = new JCheckBox("Current");
@@ -89,30 +90,34 @@ public class CreateCardsView extends JPanel {
 		   activeCheckBox.setBounds(249, 51, 94, 23);
 		   activeCheckBox.setActionCommand("active");
 		   add(activeCheckBox);
-		   
+
+		   primaryCheckBox = new JCheckBox("Primary");
+		   primaryCheckBox.setBounds(160, 81, 90, 23);
+		   primaryCheckBox.setActionCommand("primary");
+		   add(primaryCheckBox);
 		   
 		   /*recieverComboBox = new JComboBox();
 		   recieverComboBox.setBounds(155, 79, 175, 27);
 		   add(recieverComboBox);*/
 		   String[] types = {"Visa", "MC", "American Express", "Discover"};
 		   cardTypeComboBox = new JComboBox(types);
-		   cardTypeComboBox.setBounds(155, 111, 175, 27);
+		   cardTypeComboBox.setBounds(155, 151, 175, 27);
 		   add(cardTypeComboBox);
 		   
 		   
 		   
 		   creditLimitField = new JTextField();
-		   creditLimitField.setBounds(155, 143, 175, 26);
+		   creditLimitField.setBounds(155, 183, 175, 26);
 		   add(creditLimitField);
 		   creditLimitField.setColumns(10);
 		   
 		   balanceField = new JTextField();
-		   balanceField.setBounds(155, 175, 175, 26);
+		   balanceField.setBounds(155, 215, 175, 26);
 		   add(balanceField);
 		   balanceField.setColumns(10);
 		   
 		   cardField = new JTextField();
-		   cardField.setBounds(155, 79, 175, 26);
+		   cardField.setBounds(155, 119, 175, 26);
 		   add(cardField);
 		   cardField.setColumns(10);
 		   
@@ -124,7 +129,7 @@ public class CreateCardsView extends JPanel {
 		   errorMsgLabel.setVisible(false);
 		   errorMsgLabel.setForeground(Color.RED);
 		   errorMsgLabel.setLineWrap(true);
-		   errorMsgLabel.setBounds(48, 207, 354, 55);
+		   errorMsgLabel.setBounds(48, 247, 354, 55);
 		   add(errorMsgLabel);
 		   
 		   /*if (curCard != null && curOwnership != null) {
@@ -140,6 +145,7 @@ public class CreateCardsView extends JPanel {
 			  	public void actionPerformed(ActionEvent e) {
 			  	 int active = (activeCheckBox.isSelected() ? 1:0);
 			  	 int currentVal = (currentCheckBox.isSelected() ? 1:0);
+			  	 int isPrim = (primaryCheckBox.isSelected() ? 1:0);
 			  	 String cardNum = cardField.getText();
 			  	 String cardType = (String)cardTypeComboBox.getSelectedItem();
 			  	 String creditLimitStr = creditLimitField.getText();
@@ -210,7 +216,7 @@ public class CreateCardsView extends JPanel {
 			  	 
 			  	  dbaccess.open();
 			  	  dbaccess.runUpdate("Insert into CreditCards(cardNum, type, creditLimit, balance, active) Values (\""+cardNum+"\", \""+cardType+"\", " + creditLimitStr+", "+ balanceStr+", "+active+");");
-			  	  dbaccess.runUpdate("Insert into Ownership(customerID, cardNum, current) Values ("+customer.getID()+", \""+cardNum+"\", " + currentVal+");");
+			  	  dbaccess.runUpdate("Insert into Ownership(customerID, cardNum, current, primaryCard) Values ("+customer.getID()+", \""+cardNum+"\", " + currentVal+", "+isPrim+");");
 			  	  dbaccess.close();
 			  	  
 		          ManageCardsView manageCardsView = new ManageCardsView(sessionID, customer);
